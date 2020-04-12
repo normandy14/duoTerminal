@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 import sys
 import getpass
+import duolingo
 
 class Menu:
     def __init__(self):
         self.username = None
         self.password = None
+        self.session = None
         
     def displayScreen(self):
         print ("Welcome to duo terminal: review duolingo words on your terminal")
@@ -24,6 +26,8 @@ class Menu:
     
     def logIn(self):
         print ("signing into duolingo with credentials... ")
+        self.session = duolingo.Duolingo(self.username, self.password)
+        print (self.session.get_user_info())
 
 menu = Menu()
 menu.displayScreen()
