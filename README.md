@@ -17,3 +17,4 @@
 # Allow User to Input Translation into Terminal
 # Compare User Input with Translation (Lookup with Word Input into Translation Hashmap)
 # Update Flag Based on Comparison
+# Eliminate the Correct Answers and Repeat Cycle
