@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 import sys
 import getpass
 import duolingo
@@ -13,6 +14,7 @@ class Controller:
         if flag == True:
             self.model.userCredentials()
             self.model.signIn()
+            self.model.pullVocab()
         else:
             self.exit()
     
@@ -26,6 +28,7 @@ class Model:
         self.username = None
         self.password = None
         self.session = None
+        self.vocab = None
     
     def userCredentials(self):
         print ("enter credentials... ")
@@ -42,6 +45,10 @@ class Model:
             print ("try again!")
             self.userCredentials()
             self.signIn()
+            
+    def pullVocab(self):
+        self.vocab = self.session.get_known_words('es')
+        print (self.vocab)
     
 class View:
     def __init__(self):
