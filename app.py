@@ -28,15 +28,20 @@ class Model:
         self.session = None
     
     def userCredentials(self):
-        print ("enter Credentials: ")
+        print ("enter credentials... ")
         self.username = getpass.getpass("username: ")
         self.password = getpass.getpass("password: ")
     
     def signIn(self):
-        print ("signing into duolingo with credentials... ")
-        self.session = duolingo.Duolingo(self.username, self.password)
-        print (self.session.get_user_info())
-    
+        try:
+            print ("signing into duolingo with credentials... ")
+            self.session = duolingo.Duolingo(self.username, self.password)
+            print ("signin successful!")
+        except:
+            print ("signin unsuccessful...")
+            print ("try again!")
+            self.userCredentials()
+            self.signIn()
     
 class View:
     def __init__(self):
