@@ -11,7 +11,7 @@
 # Create a Python Class
 # Code API and Connect to User Account
 # Retrieve Known Vocab Words and Store in HashMap (string numerical key, value)
-# # Retrieve Translation of Known Vocab Words and Store in HashMap (word, translation)
+# Retrieve Translation of Known Vocab Words and Store in HashMap (word, translation)
 # Randomize Order of Keys (Use Hashmap Length and Create List(Index, Flag))
 # Display Randomized Order of Words in Terminal (One-by-One)
 # Allow User to Input Translation into Terminal
