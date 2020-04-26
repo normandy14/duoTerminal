@@ -56,7 +56,7 @@ class View:
         
     def display(self):
         print ("welcome to duo terminal: review duolingo words on your terminal")
-        resp = (input("select: (l)ogIn or (q)uit \n")).lower()
+        resp = (input("select: (l)ogin or (q)uit \n")).lower()
         if resp== "l":
             return True
         elif resp == "q":

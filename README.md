@@ -10,11 +10,21 @@
 # Securely Store Auth Files (gitignore, envvariable)
 # Create a Python Class
 # Code API and Connect to User Account
-# Retrieve Known Vocab Words and Store in HashMap (string numerical key, value)
-# Retrieve Translation of Known Vocab Words and Store in HashMap (word, translation)
-# Randomize Order of Keys (Use Hashmap Length and Create List(Index, Flag))
+
+--------------------------------------------------------------------------
+
+# Get Vocab Words
+# Get Translations of Vocabs
+# Map Foreign Vocab to Native Translations in a Hashmap
+
+# Initalize Hashmap with foreign words to flag value (default=0)
+
+--------------------------------------------------------------------------
+
 # Display Randomized Order of Words in Terminal (One-by-One)
 # Allow User to Input Translation into Terminal
-# Compare User Input with Translation (Lookup with Word Input into Translation Hashmap)
+
+--------------------------------------------------------------------------
+
 # Update Flag Based on Comparison
 # Eliminate the Correct Answers and Repeat Cycle
