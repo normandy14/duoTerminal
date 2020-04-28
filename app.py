@@ -3,6 +3,7 @@
 import sys
 import getpass
 import duolingo
+from googletrans import Translator
 
 class Controller:
     def __init__(self):
@@ -15,6 +16,9 @@ class Controller:
             self.model.userCredentials()
             self.model.signIn()
             self.model.pullVocab()
+            self.model.translateToHash()
+            self.model.translateToHash()
+            print (self.model.wordHash)
         else:
             self.exit()
     
@@ -28,7 +32,8 @@ class Model:
         self.username = None
         self.password = None
         self.session = None
-        self.vocab = None
+        self.vocab = []
+        self.wordHash = {}
     
     def userCredentials(self):
         print ("enter credentials... ")
@@ -50,6 +55,12 @@ class Model:
         self.vocab = self.session.get_known_words('es')
         print (self.vocab)
     
+    def translateToHash(self):
+        translator = Translator()
+        translations = translator.translate(self.vocab)
+        for translation in translations:
+            self.wordHash[translation.origin] = translation.text
+            
 class View:
     def __init__(self):
         pass

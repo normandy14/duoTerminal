@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4668c8a394e2908984d3912842bcd7763a780a83f7665d87a2ecfbf682742f4a"
+            "sha256": "b378ffb99b209ffda69a2dbfec0da3b5210de069eee2c7cabe4e8574b112905a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,10 +32,17 @@
         },
         "duolingo-api": {
             "hashes": [
-                "sha256:9975ffba3cbc28e643d17556c4ce5ffe85551e9e003954e4768ce478253d4701"
+                "sha256:28bf7e3e2f46d939c22f9fdedb1d36cd89b9ab87c2fc031a3fc8ef4f9bf99f07"
             ],
             "index": "pypi",
-            "version": "==0.4.2"
+            "version": "==0.5.0"
+        },
+        "googletrans": {
+            "hashes": [
+                "sha256:bb4e2a6ee72a24870e696a14238b7305f855a05206ecae10bd50052651984cc5"
+            ],
+            "index": "pypi",
+            "version": "==2.4.0"
         },
         "idna": {
             "hashes": [
@@ -53,10 +60,10 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc",
-                "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"
+                "sha256:3018294ebefce6572a474f0604c2021e33b3fd8006ecd11d62107a5d2a963527",
+                "sha256:88206b0eb87e6d677d424843ac5209e3fb9d0190d0ee169599165ec25e9d9115"
             ],
-            "version": "==1.25.8"
+            "version": "==1.25.9"
         }
     },
     "develop": {}
