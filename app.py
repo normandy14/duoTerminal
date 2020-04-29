@@ -19,6 +19,7 @@ class Controller:
             self.model.translateToHash()
             self.model.translateToHash()
             print (self.model.wordHash)
+            print (self.model.flagHash)
         else:
             self.exit()
     
@@ -34,6 +35,7 @@ class Model:
         self.session = None
         self.vocab = []
         self.wordHash = {}
+        self.flagHash = {}
     
     def userCredentials(self):
         print ("enter credentials... ")
@@ -60,6 +62,7 @@ class Model:
         translations = translator.translate(self.vocab)
         for translation in translations:
             self.wordHash[translation.origin] = translation.text
+            self.flagHash[translation.text] = 0
             
 class View:
     def __init__(self):
@@ -73,6 +76,5 @@ class View:
         elif resp == "q":
             return False
     
-
 app = Controller()
 app.run()
