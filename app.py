@@ -4,6 +4,7 @@ import sys
 import getpass
 import duolingo
 from googletrans import Translator
+from hyper import HTTPConnection
 
 class Controller:
     def __init__(self):
