@@ -5,26 +5,27 @@
 4. Modes (Format): Written, Audio, Written and Audio
 5. Modes (Order): Random, Elimination
 
-# Write a Basic Terminal Menu (Class)
-# Install API with Pip File
-# Securely Store Auth Files (gitignore, envvariable)
-# Create a Python Class
-# Code API and Connect to User Account
+--------------------------------------------------------------------------
+
+1. Write a Basic Terminal Menu (Class)
+2. Install API with Pip File
+3. Securely Store Auth Files (gitignore, envvariable)
+4. Create a Python Class
+5. Code API and Connect to User Account
 
 --------------------------------------------------------------------------
 
-# Get Vocab Words
-# Get Translations of Vocabs
-# Map Foreign Vocab to Native Translations in a Hashmap
-
-# Initalize Hashmap with foreign words to flag value (default=0)
-
---------------------------------------------------------------------------
-
-# Display Randomized Order of Words in Terminal (One-by-One)
-# Allow User to Input Translation into Terminal
+6. Get Vocab Words
+7. Get Translations of Vocabs
+8. Map Foreign Vocab to Native Translations in a Hashmap
+9. Initalize Hashmap with foreign words to flag value (default=0)
 
 --------------------------------------------------------------------------
 
-# Update Flag Based on Comparison
-# Eliminate the Correct Answers and Repeat Cycle
+10. Display Randomized Order of Words in Terminal (One-by-One)
+11. Allow User to Input Translation into Terminal
+
+--------------------------------------------------------------------------
+
+12. Update Flag Based on Comparison
+13. Eliminate the Correct Answers and Repeat Cycle
