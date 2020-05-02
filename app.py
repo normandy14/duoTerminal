@@ -25,22 +25,49 @@ class Controller:
             self.exit()
     
     def iterateVocabHash(self):
-        print ("What is the English translation of the word? ")
+        
+        # Setting up variables
         vocabHash = copy.deepcopy(self.model.wordHash)
         sizeHash = len(vocabHash)
         flag = self.vocabFlag()
+        
+        # Iteration: double loop (consider refactioring along with code at end of block)
         while flag != True:
+            
+            # Second for loop
             for key in vocabHash:
-                value = vocabHash[key]
+                
                 input_ = self.view.displayWord(key)
-                if input_ == value:
-                    self.model.flagHash[key] = 1
+                value = vocabHash[key]
+                
+                # compare user input (translation) with stored translation (from google api)
+                self.compareInput(key, value, input_)
+            
+            # Procedures to update vocabHash
+            vocabHash = self.updateVocabHash(vocabHash)
+            
+            # Records condition for exiting loop
             flag = self.vocabFlag()
-            listKnownWords = [key  for (key, value) in self.model.flagHash.items() if value == 1]
-            vocabHash = { key : value for (key, value) in vocabHash.items() if key not in listKnownWords }
-            print (listKnownWords)
+            
+            # Debug statements
             print (vocabHash)
     
+    def updateVocabHash(self, vocabHash):
+        listKnownWords = [key  for (key, value) in self.model.flagHash.items() if value == 1]
+        filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords}
+        return filteredVocabHash
+        
+    def compareInput(self, key, value, input_):
+        if input_ == value:
+            self.model.flagHash[key] = 1
+        return None
+        
+    
+    def giveWordGetInput(self, hashmap):
+        value = hashmap[key]
+        input_ = self.view.displayWord(key)
+        return input_
+        
     def vocabFlag(self):
         if 0 in self.model.flagHash.values():
             return False
@@ -100,6 +127,7 @@ class View:
             return False
     
     def displayWord(self, key):
+        print ("what is the english translation of the word? ")
         print (key)
         input_ = input().lower()
         return input_
