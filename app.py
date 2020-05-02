@@ -8,6 +8,9 @@ import hyper
 from googletrans import Translator
 
 class Controller:
+    """
+        Class that orchestrates the interactions between model and view
+    """
     def __init__(self):
         self.model = Model()
         self.view = View()
@@ -51,6 +54,9 @@ class Controller:
         sys.exit()
         
 class Model:
+    """
+        Class that contains the methods that interact with the 'backend' and data of the program
+    """
     def __init__(self):
         self.username = None
         self.password = None
@@ -60,11 +66,17 @@ class Model:
         self.flagHash = {}
     
     def userCredentials(self):
+        """
+            Method that securely stores user's given username and password
+        """
         print ("enter credentials... ")
         self.username = getpass.getpass("username: ")
         self.password = getpass.getpass("password: ")
     
     def signIn(self):
+        """
+            Method that returns user session for duolingo user
+        """
         try:
             print ("signing into duolingo with credentials... ")
             self.session = duolingo.Duolingo(self.username, self.password)
@@ -76,42 +88,65 @@ class Model:
             self.signIn()
             
     def pullVocab(self):
-        self.vocab = self.session.get_known_words('es')
+        """
+            Method that retreives learned words from duolingo stores user's learned words in a list
+        """
+        self.vocab = self.session.get_known_words('es') # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
         self.vocab = self.vocab[:5] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
-        print (self.vocab)
     
     def translateToHash(self):
-        translator = Translator()
-        translations = translator.translate(self.vocab)
+        """
+            Method that converts vocabList into a hashmap (english -> foreign), and another hashmap with key mapped to default value of zero
+        """
+        translator = Translator() # googletrans constructor
+        translations = translator.translate(self.vocab) # method of googletrans constructor
         for translation in translations:
             self.wordHash[translation.origin] = translation.text.lower()
             self.flagHash[translation.origin] = 0
     
     def updateVocabHash(self, vocabHash):
-        listKnownWords = [key  for (key, value) in self.flagHash.items() if value == 1]
-        filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords}
+        """
+            Method that filters out learned words from vocabHashMap
+        """
+        listKnownWords = [key  for (key, value) in self.flagHash.items() if value == 1] # uses the flags in flagHashMap to determine in word is learned
+        filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords} # uses the listKnownWords to filter vocabHash
         return filteredVocabHash
         
     def compareInput(self, key, value, input_):
+        """
+            Method that compares user input with value (translation) in flagHashMap
+        """
         if input_ == value:
             self.flagHash[key] = 1
         return None
     
     def giveWordGetInput(self, hashmap):
+        """
+            Method that gives the foreign word to the view, and retreives the user input_
+        """
         value = hashmap[key]
         input_ = self.view.displayWord(key)
         return input_
         
     def vocabFlag(self):
+        """
+            Method that returns True if all words are translated correctly by the user
+        """
         if 0 in self.flagHash.values():
             return False
         return True
             
 class View:
+    """
+        Class that orchestrates the interactions between program and the terminal
+    """
     def __init__(self):
         pass
         
     def display(self):
+        """
+            Method that displays the opening dialogue of the program
+        """
         print ("welcome to duo terminal: review duolingo words on your terminal")
         resp = (input("select: (l)ogin or (q)uit \n")).lower()
         if resp== "l":
@@ -119,9 +154,12 @@ class View:
         elif resp == "q":
             return False
     
-    def displayWord(self, key):
+    def displayWord(self, word):
+        """
+            Method that displays the foreign word to the terminal, and retrieves user input
+        """
         print ("what is the english translation of the word? ")
-        print (key)
+        print (word)
         input_ = input().lower()
         return input_
         
