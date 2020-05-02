@@ -117,14 +117,14 @@ class Model:
             Method that compares user input with value (translation) in flagHashMap
         """
         if input_ == value:
-            self.flagHash[key] = 1
+            self.flagHash[key] = 1 # True, marks a learned word
         return None
     
     def giveWordGetInput(self, hashmap):
         """
             Method that gives the foreign word to the view, and retreives the user input_
         """
-        value = hashmap[key]
+        value = hashmap[key] # gets the foreign word
         input_ = self.view.displayWord(key)
         return input_
         
@@ -132,7 +132,7 @@ class Model:
         """
             Method that returns True if all words are translated correctly by the user
         """
-        if 0 in self.flagHash.values():
+        if 0 in self.flagHash.values(): # searches if there are unlearned words in the hashmap
             return False
         return True
             
