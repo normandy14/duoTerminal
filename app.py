@@ -2,7 +2,9 @@
 
 import sys
 import getpass
+import copy
 import duolingo
+import hyper
 from googletrans import Translator
 
 class Controller:
@@ -23,19 +25,31 @@ class Controller:
             self.exit()
     
     def iterateVocabHash(self):
-        vocabHash = self.model.wordHash
         print ("What is the English translation of the word? ")
-        for key in vocabHash:
-            value = vocabHash[key]
-            input_ = self.view.displayWord(key)
-            if input_ == value:
-                self.model.flagHash[key] = 1
+        vocabHash = copy.deepcopy(self.model.wordHash)
+        sizeHash = len(vocabHash)
+        flag = self.vocabFlag()
+        while flag != True:
+            for key in vocabHash:
+                value = vocabHash[key]
+                input_ = self.view.displayWord(key)
+                if input_ == value:
+                    self.model.flagHash[key] = 1
+            flag = self.vocabFlag()
+            listKnownWords = [key  for (key, value) in self.model.flagHash.items() if value == 1]
+            vocabHash = { key : value for (key, value) in vocabHash.items() if key not in listKnownWords }
+            print (listKnownWords)
+            print (vocabHash)
+    
+    def vocabFlag(self):
+        if 0 in self.model.flagHash.values():
+            return False
+        return True
     
     def exit(self):
         print ("until next time...")
         sys.exit()
         
-
 class Model:
     def __init__(self):
         self.username = None
@@ -73,7 +87,6 @@ class Model:
             self.wordHash[translation.origin] = translation.text.lower()
             self.flagHash[translation.origin] = 0
             
-            
 class View:
     def __init__(self):
         pass
@@ -85,7 +98,6 @@ class View:
             return True
         elif resp == "q":
             return False
-    
     
     def displayWord(self, key):
         print (key)
