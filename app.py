@@ -13,6 +13,9 @@ class Controller:
         self.view = View()
     
     def run(self):
+        """
+            Method is the main method that orchestrates all the methods in the model, view, and controller
+        """
         flag = self.view.display()
         if flag == True:
             self.model.userCredentials()
@@ -20,22 +23,30 @@ class Controller:
             self.model.pullVocab()
             self.model.translateToHash()
             self.iterateVocabHash()
-            print (self.model.flagHash)
         else:
             self.exit()
     
     def iterateVocabHash(self):
-        vocabHash = copy.deepcopy(self.model.wordHash)
-        flag = self.model.vocabFlag()
+        """
+            Method orchestrates the interactions between the view(user interface) and model(app data)
+            
+            Flag is a boolean variable; it releases the program loop if the user translates all of the words
+            For loop repeats without the correctly translated words
+        """
+        vocabHash = copy.deepcopy(self.model.wordHash) # stores a local deepcopy of the hashmap; a deepcopy is an iterative copy without references
+        flag = self.model.vocabFlag() # boolean variable: default value is False
         while flag != True:
             for key in vocabHash:
-                input_ = self.view.displayWord(key)
+                input_ = self.view.displayWord(key) # gives the vocab word to the view, and gets the input translation from the user
                 value = vocabHash[key]
-                self.model.compareInput(key, value, input_)
-            vocabHash = self.model.updateVocabHash(vocabHash)
-            flag = self.model.vocabFlag()
+                self.model.compareInput(key, value, input_) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
+            vocabHash = self.model.updateVocabHash(vocabHash) # filter the vocabHash with the translated words
+            flag = self.model.vocabFlag() # if all words are translated correctly, then update the flag variable
     
     def exit(self):
+        """
+            Method that safely exits the program
+        """
         print ("until next time...")
         sys.exit()
         
