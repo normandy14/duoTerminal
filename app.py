@@ -17,9 +17,19 @@ class Controller:
             self.model.signIn()
             self.model.pullVocab()
             self.model.translateToHash()
-            # self.view.displayVocab()
+            self.iterateVocabHash()
+            print (self.model.flagHash)
         else:
             self.exit()
+    
+    def iterateVocabHash(self):
+        vocabHash = self.model.wordHash
+        print ("What is the English translation of the word? ")
+        for key in vocabHash:
+            value = vocabHash[key]
+            input_ = self.view.displayWord(key)
+            if input_ == value:
+                self.model.flagHash[key] = 1
     
     def exit(self):
         print ("until next time...")
@@ -33,6 +43,7 @@ class Model:
         self.session = None
         self.vocab = []
         self.wordHash = {}
+        self.flagHash = {}
     
     def userCredentials(self):
         print ("enter credentials... ")
@@ -60,6 +71,8 @@ class Model:
         translations = translator.translate(self.vocab)
         for translation in translations:
             self.wordHash[translation.origin] = translation.text.lower()
+            self.flagHash[translation.origin] = 0
+            
             
 class View:
     def __init__(self):
@@ -73,6 +86,13 @@ class View:
         elif resp == "q":
             return False
     
-
+    
+    def displayWord(self, key):
+        print (key)
+        input_ = input().lower()
+        return input_
+        
+        
+        
 app = Controller()
 app.run()
