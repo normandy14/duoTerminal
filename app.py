@@ -25,53 +25,15 @@ class Controller:
             self.exit()
     
     def iterateVocabHash(self):
-        
-        # Setting up variables
         vocabHash = copy.deepcopy(self.model.wordHash)
-        sizeHash = len(vocabHash)
-        flag = self.vocabFlag()
-        
-        # Iteration: double loop (consider refactioring along with code at end of block)
+        flag = self.model.vocabFlag()
         while flag != True:
-            
-            # Second for loop
             for key in vocabHash:
-                
                 input_ = self.view.displayWord(key)
                 value = vocabHash[key]
-                
-                # compare user input (translation) with stored translation (from google api)
-                self.compareInput(key, value, input_)
-            
-            # Procedures to update vocabHash
-            vocabHash = self.updateVocabHash(vocabHash)
-            
-            # Records condition for exiting loop
-            flag = self.vocabFlag()
-            
-            # Debug statements
-            print (vocabHash)
-    
-    def updateVocabHash(self, vocabHash):
-        listKnownWords = [key  for (key, value) in self.model.flagHash.items() if value == 1]
-        filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords}
-        return filteredVocabHash
-        
-    def compareInput(self, key, value, input_):
-        if input_ == value:
-            self.model.flagHash[key] = 1
-        return None
-        
-    
-    def giveWordGetInput(self, hashmap):
-        value = hashmap[key]
-        input_ = self.view.displayWord(key)
-        return input_
-        
-    def vocabFlag(self):
-        if 0 in self.model.flagHash.values():
-            return False
-        return True
+                self.model.compareInput(key, value, input_)
+            vocabHash = self.model.updateVocabHash(vocabHash)
+            flag = self.model.vocabFlag()
     
     def exit(self):
         print ("until next time...")
@@ -113,6 +75,26 @@ class Model:
         for translation in translations:
             self.wordHash[translation.origin] = translation.text.lower()
             self.flagHash[translation.origin] = 0
+    
+    def updateVocabHash(self, vocabHash):
+        listKnownWords = [key  for (key, value) in self.flagHash.items() if value == 1]
+        filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords}
+        return filteredVocabHash
+        
+    def compareInput(self, key, value, input_):
+        if input_ == value:
+            self.flagHash[key] = 1
+        return None
+    
+    def giveWordGetInput(self, hashmap):
+        value = hashmap[key]
+        input_ = self.view.displayWord(key)
+        return input_
+        
+    def vocabFlag(self):
+        if 0 in self.flagHash.values():
+            return False
+        return True
             
 class View:
     def __init__(self):
