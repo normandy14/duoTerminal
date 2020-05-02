@@ -4,7 +4,6 @@ import sys
 import getpass
 import duolingo
 from googletrans import Translator
-from hyper import HTTPConnection
 
 class Controller:
     def __init__(self):
@@ -18,9 +17,7 @@ class Controller:
             self.model.signIn()
             self.model.pullVocab()
             self.model.translateToHash()
-            self.model.translateToHash()
-            print (self.model.wordHash)
-            print (self.model.flagHash)
+            # self.view.displayVocab()
         else:
             self.exit()
     
@@ -36,7 +33,6 @@ class Model:
         self.session = None
         self.vocab = []
         self.wordHash = {}
-        self.flagHash = {}
     
     def userCredentials(self):
         print ("enter credentials... ")
@@ -56,14 +52,14 @@ class Model:
             
     def pullVocab(self):
         self.vocab = self.session.get_known_words('es')
+        self.vocab = self.vocab[:5] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
         print (self.vocab)
     
     def translateToHash(self):
         translator = Translator()
         translations = translator.translate(self.vocab)
         for translation in translations:
-            self.wordHash[translation.origin] = translation.text
-            self.flagHash[translation.text] = 0
+            self.wordHash[translation.origin] = translation.text.lower()
             
 class View:
     def __init__(self):
@@ -77,5 +73,6 @@ class View:
         elif resp == "q":
             return False
     
+
 app = Controller()
 app.run()

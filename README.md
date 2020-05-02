@@ -1,4 +1,5 @@
 <!-- Duolingo Vocab Words Terminal App -->
+
 1. Use API from Duolingo to get Known Words
 2. Use API from Dictionary Service to get Meaning of Words
 3. Create Hashmap to Store Comparison
