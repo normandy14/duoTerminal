@@ -1,32 +1,109 @@
-<!-- Duolingo Vocab Words Terminal App -->
+# DuoTerminal
 
-1. Use API from Duolingo to get Known Words
-2. Use API from Dictionary Service to get Meaning of Words
-3. Create Hashmap to Store Comparison
-4. Modes (Format): Written, Audio, Written and Audio
-5. Modes (Order): Random, Elimination
+DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform,
+all from the convenience of your terminal
 
---------------------------------------------------------------------------
+Effortlylessly connect to your Duolingo account from your terminal, and enjoy the reinforcement process!
 
-1. Write a Basic Terminal Menu (Class)
-2. Install API with Pip File
-3. Securely Store Auth Files (gitignore, envvariable)
-4. Create a Python Class
-5. Code API and Connect to User Account
+As you are presented with each word, translate each word from your target language to English.
+Or try your hand at translating from English to your target language. The choice is yours!
 
---------------------------------------------------------------------------
+The words that you missed or repeating until you've completed the translation cycle.
 
-6. Get Vocab Words
-7. Get Translations of Vocabs
-8. Map Foreign Vocab to Native Translations in a Hashmap
-9. Initalize Hashmap with foreign words to flag value (default=0)
 
---------------------------------------------------------------------------
+## Getting Started
 
-10. Display Randomized Order of Words in Terminal (One-by-One)
-11. Allow User to Input Translation into Terminal
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
---------------------------------------------------------------------------
+### Prerequisites
 
-12. Update Flag Based on Comparison
-13. Eliminate the Correct Answers and Repeat Cycle
+What things you need to install the software and how to install them
+
+```
+[Python 3](https://www.python.org/)
+[Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3)
+[Pipenv](https://pypi.org/project/pipenv/)
+```
+Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running
+
+1. Install Prerequisites
+2. Enter the Pipenv enviroment
+
+```
+pipenv shell
+```
+
+3. Install the program dependencies
+
+```
+pipenv install
+```
+
+4. Run the program
+
+```
+pipenv run python3 app.py
+```
+
+You will be presented with a menu such as the following, when you run the program successfully
+
+```
+welcome to duo terminal: review duolingo words on your terminal
+select: (l)ogin or (q)uit
+```
+
+## Running the tests
+
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03) for versioning.
+
+## Authors
+
+* **Normandy14** - *Initial work* - [Github Account](https://github.com/Normandy14)
+
+## License
+
+This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
