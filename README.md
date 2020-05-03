@@ -1,9 +1,9 @@
 # DuoTerminal
 
 DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform,
-all from the convenience of your terminal
+all from the convenience of your personal terminal
 
-Effortlylessly connect to your Duolingo account from your terminal, and enjoy the reinforcement process!
+Effortlessly connect to your Duolingo account without opening a web browser, and enjoy the learning vocabulary reinforcement process!
 
 As you are presented with each word, translate each word from your target language to English.
 Or try your hand at translating from English to your target language. The choice is yours!
@@ -19,11 +19,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-```
 [Python 3](https://www.python.org/)
 [Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3)
 [Pipenv](https://pypi.org/project/pipenv/)
-```
+
 Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
 
 ### Installing
