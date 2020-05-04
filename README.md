@@ -19,9 +19,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-[Python 3](https://www.python.org/)
-[Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3)
-[Pipenv](https://pypi.org/project/pipenv/)
+1. [Python 3](https://www.python.org/) -- Popular Programming Language
+2. [Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3) -- Programming Packaging Installer
+3. [Pipenv](https://pypi.org/project/pipenv/) -- Programming Enviroment Manager
 
 Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
 
@@ -100,7 +100,7 @@ Ran 14 tests in 0.005s
 
 OK
 ```
-
+<!--
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
@@ -110,6 +110,7 @@ Add additional notes about how to deploy this on a live system
 * [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+-->
 
 ## Contributing
 
@@ -127,8 +128,10 @@ We use [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03) for version
 
 This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
 
+<!--
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used
 * Inspiration
 * etc
+-->
