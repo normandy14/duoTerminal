@@ -1,7 +1,8 @@
 # DuoTerminal
 
-DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform,
-all from the convenience of your personal terminal
+![Duo](https://vignette.wikia.nocookie.net/duolingo/images/b/be/Duo_2019.png/revision/latest?cb=20190307143704)
+
+DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform, all from the convenience of your personal terminal
 
 Effortlessly connect to your Duolingo account without opening a web browser, and enjoy the learning vocabulary reinforcement process!
 
