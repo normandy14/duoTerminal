@@ -9,7 +9,8 @@ from googletrans import Translator
 
 class Controller:
     """
-        Class that orchestrates the interactions between model and view
+        Class that orchestrates the interactions between model(data) and view(user)
+        
     """
     def __init__(self):
         self.model = Model()
@@ -18,6 +19,7 @@ class Controller:
     def run(self):
         """
             Method is the main method that orchestrates all the methods in the model, view, and controller
+            
         """
         flag = self.view.display()
         if flag == True:
@@ -31,10 +33,11 @@ class Controller:
     
     def iterateVocabHash(self):
         """
-            Method orchestrates the interactions between the view(user interface) and model(app data)
+            Method orchestrates the interactions between the model(data) and view(user)
             
             Flag is a boolean variable; it releases the program loop if the user translates all of the words
             For loop repeats without the correctly translated words
+            
         """
         vocabHash = copy.deepcopy(self.model.wordHash) # stores a local deepcopy of the hashmap; a deepcopy is an iterative copy without references
         flag = self.model.vocabFlag() # boolean variable: default value is False
@@ -49,6 +52,7 @@ class Controller:
     def exit(self):
         """
             Method that safely exits the program
+            
         """
         print ("until next time...")
         sys.exit()
@@ -56,6 +60,7 @@ class Controller:
 class Model:
     """
         Class that contains the methods that interact with the 'backend' and data of the program
+        
     """
     def __init__(self):
         self.username = None
@@ -65,9 +70,20 @@ class Model:
         self.wordHash = {}
         self.flagHash = {}
     
+    """
+        The following methods:
+        
+            userCredentials(), signIn(), pullVocab(), translateToHash()
+        
+        Interact with web services using the duolingo package.
+        It requires HTTP/s and a network connect to the internet
+        
+    """
+    
     def userCredentials(self):
         """
             Method that securely stores user's given username and password
+            
         """
         print ("enter credentials... ")
         self.username = getpass.getpass("username: ")
@@ -76,6 +92,7 @@ class Model:
     def signIn(self):
         """
             Method that returns user session for duolingo user
+            
         """
         try:
             print ("signing into duolingo with credentials... ")
@@ -90,6 +107,7 @@ class Model:
     def pullVocab(self):
         """
             Method that retreives learned words from duolingo stores user's learned words in a list
+            
         """
         self.vocab = self.session.get_known_words('es') # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
         self.vocab = self.vocab[:5] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
@@ -97,6 +115,7 @@ class Model:
     def translateToHash(self):
         """
             Method that converts vocabList into a hashmap (english -> foreign), and another hashmap with key mapped to default value of zero
+            
         """
         translator = Translator() # googletrans constructor
         translations = translator.translate(self.vocab) # method of googletrans constructor
@@ -104,33 +123,38 @@ class Model:
             self.wordHash[translation.origin] = translation.text.lower()
             self.flagHash[translation.origin] = 0
     
+    """
+        The following methods:
+        
+            translatetoHash(), updateVocabHash(), compareInput(), vocabFlag()
+        
+        Interact with 'backend' of the program. It processes and interacts with the data pulled from the duolingo package,
+        and sends it to the controller class
+    
+    """
+    
     def updateVocabHash(self, vocabHash):
         """
-            Method that filters out learned words from vocabHashMap
+            Method that filters out learned words from vocabHash
+            
         """
-        listKnownWords = [key  for (key, value) in self.flagHash.items() if value == 1] # uses the flags in flagHashMap to determine in word is learned
+        listKnownWords = [key  for (key, value) in self.flagHash.items() if value == 1] # uses the flags in flagHash to determine in word is learned
         filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords} # uses the listKnownWords to filter vocabHash
         return filteredVocabHash
         
     def compareInput(self, key, value, input_):
         """
-            Method that compares user input with value (translation) in flagHashMap
+            Method that compares user input with value (translation) in flagHash
+            
         """
         if input_ == value:
             self.flagHash[key] = 1 # True, marks a learned word
         return None
-    
-    def giveWordGetInput(self, hashmap):
-        """
-            Method that gives the foreign word to the view, and retreives the user input_
-        """
-        value = hashmap[key] # gets the foreign word
-        input_ = self.view.displayWord(key)
-        return input_
         
     def vocabFlag(self):
         """
             Method that returns True if all words are translated correctly by the user
+            
         """
         if 0 in self.flagHash.values(): # searches if there are unlearned words in the hashmap
             return False
@@ -139,6 +163,7 @@ class Model:
 class View:
     """
         Class that orchestrates the interactions between program and the terminal
+        
     """
     def __init__(self):
         pass
@@ -146,6 +171,7 @@ class View:
     def display(self):
         """
             Method that displays the opening dialogue of the program
+            
         """
         print ("welcome to duo terminal: review duolingo words on your terminal")
         resp = (input("select: (l)ogin or (q)uit \n")).lower()
@@ -157,13 +183,14 @@ class View:
     def displayWord(self, word):
         """
             Method that displays the foreign word to the terminal, and retrieves user input
+            
         """
-        print ("what is the english translation of the word? ")
+        print ("what is the english translation of the word?")
         print (word)
         input_ = input().lower()
         return input_
         
         
-        
-app = Controller()
-app.run()
+if __name__ == "__main__":
+    app = Controller()
+    app.run()

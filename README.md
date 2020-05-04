@@ -59,20 +59,46 @@ select: (l)ogin or (q)uit
 
 Explain how to run the automated tests for this system
 
+1. Enter the shell enviroment
+
+```
+pipenv shell
+```
+
+2. Install the dependencies
+
+```
+pipenv install --dev
+```
+
+3. Run the tests
+
+```
+pipenv run nosetests testApp.py
+```
+
+
 ### Break down into end to end tests
 
 Explain what these tests test and why
 
-```
-Give an example
-```
+The tests contained in testApp are unit tests for the Model class.
+Methods that involved networking are ommitted (dependency on networking).
+Tests on the Controller and View class are ommitted (dependency on user).
 
-### And coding style tests
 
-Explain what these tests test and why
+The tests test the three following methods:
+
+  vocabFlag(), compareInput(), updateVocabHash()
+
+The methods tests the data processing and manipulation of the data stored in hashes
 
 ```
-Give an example
+pipenv run nosetests testApp.py
+----------------------------------------------------------------------
+Ran 14 tests in 0.005s
+
+OK
 ```
 
 ## Deployment
