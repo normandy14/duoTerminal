@@ -21,9 +21,10 @@ class Controller:
             Method is the main method that orchestrates all the methods in the model, view, and controller
             
         """
-        flag = self.view.display()
+        flag = self.view.display() # if the user selects to procede, then with the main program
         if flag == True:
-            self.model.userCredentials()
+            cred = self.view.getUserCredentials()
+            self.model.storeUserCredentials(cred[0], cred[1])
             self.model.signIn()
             self.model.pullVocab()
             self.model.translateToHash()
@@ -80,15 +81,14 @@ class Model:
         
     """
     
-    def userCredentials(self):
+    def storeUserCredentials(self, username, password):
         """
             Method that securely stores user's given username and password
             
         """
-        print ("enter credentials... ")
-        self.username = getpass.getpass("username: ")
-        self.password = getpass.getpass("password: ")
-    
+        self.username = username
+        self.password = password
+        
     def signIn(self):
         """
             Method that returns user session for duolingo user
@@ -101,7 +101,7 @@ class Model:
         except:
             print ("signin unsuccessful...")
             print ("try again!")
-            self.userCredentials()
+            self.storeUserCredentials()
             self.signIn()
             
     def pullVocab(self):
@@ -189,7 +189,16 @@ class View:
         print (word)
         input_ = input().lower()
         return input_
-        
+    
+    def getUserCredentials(self):
+        """
+            Method that securely stores user's given username and password
+            
+        """
+        username = getpass.getpass("enter username... \n")
+        password = getpass.getpass("enter password... \n")
+        credentials = [username, password]
+        return credentials
         
 if __name__ == "__main__":
     app = Controller()
