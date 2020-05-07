@@ -7,6 +7,10 @@ import duolingo
 import hyper
 from googletrans import Translator
 
+# TODO:
+# 1. Convert Translation (English to Target) Direction
+# 2. Convert
+
 class Controller:
     """
         Class that orchestrates the interactions between model(data) and view(user)
@@ -23,16 +27,37 @@ class Controller:
         """
         flag = self.view.display() # if the user selects to procede, then with the main program
         if flag == True:
-            cred = self.view.getUserCredentials()
-            self.model.storeUserCredentials(cred[0], cred[1])
-            self.model.signIn()
-            self.model.pullVocab()
+            
+            # DEBUG: hashmap hardcoded for offline development
+            
+            '''
+            
+                cred = self.view.getUserCredentials()
+                self.model.storeUserCredentials(cred[0], cred[1])
+                self.model.signIn()
+                self.model.pullVocab()
+                # Important: Delete Later!
+            
+            '''
+            
+            self.model.wordHash = {'hola' : 'hello', 'en' : 'in', 'tres' : 'three', 'casa' : 'house', 'ciudad' : 'city'}
+            self.model.flagHash = {'hola' : 0, 'en' : 0, 'tres' : 0, 'casa' : 0, 'ciudad' : 0}
             self.model.translateToHash()
-            self.iterateVocabHash()
+            
+            wordHash = {}
+            resp = (input("(T)arget to English, or (E)nglish to Target? \n")).lower()
+            if (resp == "t"):
+                wordHash = self.model.wordHash
+                flagHash = self.model.flagHash
+            elif (resp == "e"):
+                wordHash = self.model.invertWordHash()
+                flagHash = self.model.targetFlagHash(wordHash.keys())
+            self.iterateVocabHash(wordHash, flagHash)
+            
         else:
             self.exit()
     
-    def iterateVocabHash(self):
+    def iterateVocabHash(self, wordHash, flagHash):
         """
             Method orchestrates the interactions between the model(data) and view(user)
             
@@ -40,16 +65,17 @@ class Controller:
             For loop repeats without the correctly translated words
             
         """
-        vocabHash = copy.deepcopy(self.model.wordHash) # stores a local deepcopy of the hashmap; a deepcopy is an iterative copy without references
-        flag = self.model.vocabFlag() # boolean variable: default value is False
+        flag = self.model.vocabFlag(flagHash) # boolean variable: default value is False
         while flag != True:
-            for key in vocabHash:
+            for key in wordHash:
                 input_ = self.view.displayWord(key) # gives the vocab word to the view, and gets the input translation from the user
-                value = vocabHash[key]
-                self.model.compareInput(key, value, input_) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
-            vocabHash = self.model.updateVocabHash(vocabHash) # filter the vocabHash with the translated words
-            flag = self.model.vocabFlag() # if all words are translated correctly, then update the flag variable
-    
+                value = wordHash[key]
+                flagHash = self.model.compareInput(key, value, input_, flagHash) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
+            wordHash = self.model.updateVocabHash(wordHash, flagHash) # filter the vocabHash with the translated words
+            
+            flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
+            print (flag)
+            
     def exit(self):
         """
             Method that safely exits the program
@@ -133,30 +159,44 @@ class Model:
     
     """
     
-    def updateVocabHash(self, vocabHash):
+    def invertWordHash(self):
+        hash_ = {}
+        keys = list(self.wordHash.keys())
+        values = list(self.wordHash.values())
+        for i in range(len(values)):
+            hash_[values[i]] = keys[i]
+        return hash_
+        
+    def targetFlagHash(self, keys):
+        hash_ = {}
+        for key in keys:
+            hash_[key] = 0
+        return hash_
+    
+    def updateVocabHash(self, vocabHash, flagHash):
         """
             Method that filters out learned words from vocabHash
             
         """
-        listKnownWords = [key  for (key, value) in self.flagHash.items() if value == 1] # uses the flags in flagHash to determine in word is learned
+        listKnownWords = [key  for (key, value) in flagHash.items() if value == 1] # uses the flags in flagHash to determine in word is learned
         filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords} # uses the listKnownWords to filter vocabHash
         return filteredVocabHash
         
-    def compareInput(self, key, value, input_):
+    def compareInput(self, key, value, input_, flagHash):
         """
             Method that compares user input with value (translation) in flagHash
             
         """
         if input_ == value:
-            self.flagHash[key] = 1 # True, marks a learned word
-        return None
+            flagHash[key] = 1 # True, marks a learned word
+        return flagHash
         
-    def vocabFlag(self):
+    def vocabFlag(self, flagHash):
         """
             Method that returns True if all words are translated correctly by the user
             
         """
-        if 0 in self.flagHash.values(): # searches if there are unlearned words in the hashmap
+        if 0 in flagHash.values(): # searches if there are unlearned words in the hashmap
             return False
         return True
             
@@ -185,7 +225,7 @@ class View:
             Method that displays the foreign word to the terminal, and retrieves user input
             
         """
-        print ("what is the english translation of the word?")
+        print ("what is the translation of the word?")
         print (word)
         input_ = input().lower()
         return input_
