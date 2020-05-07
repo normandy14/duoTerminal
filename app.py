@@ -9,7 +9,8 @@ from googletrans import Translator
 
 # TODO:
 # 1. Convert Translation (English to Target) Direction
-# 2. Convert
+# 2. Show Number Correct, Number Incorrect
+# 3. Expand to More Languages
 
 class Controller:
     """
@@ -74,7 +75,8 @@ class Controller:
             wordHash = self.model.updateVocabHash(wordHash, flagHash) # filter the vocabHash with the translated words
             
             flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
-            print (flag)
+            numCount = self.model.getNumCorrect(flagHash)
+            self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount))
             
     def exit(self):
         """
@@ -190,6 +192,11 @@ class Model:
         if input_ == value:
             flagHash[key] = 1 # True, marks a learned word
         return flagHash
+    
+    def getNumCorrect(self, flagHash):
+        filteredFlagHash = [key for (key, value) in flagHash.items() if value == 1]
+        numCorrect = len(filteredFlagHash)
+        return numCorrect
         
     def vocabFlag(self, flagHash):
         """
@@ -229,6 +236,9 @@ class View:
         print (word)
         input_ = input().lower()
         return input_
+        
+    def displayOutput(self, output):
+        print (output)
     
     def getUserCredentials(self):
         """
