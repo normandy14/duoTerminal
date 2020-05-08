@@ -46,7 +46,7 @@ class Controller:
             self.model.translateToHash()
             
             wordHash = {}
-            resp = (input("(T)arget to English, or (E)nglish to Target? \n")).lower()
+            resp = (getpass.getpass("(T)arget to English, or (E)nglish to Target? \n")).lower()
             if (resp == "t"):
                 wordHash = self.model.wordHash
                 flagHash = self.model.flagHash
@@ -117,6 +117,7 @@ class Model:
         self.username = username
         self.password = password
         
+    # Printing is done in the Model! Move to Controller and View!
     def signIn(self):
         """
             Method that returns user session for duolingo user
@@ -228,12 +229,16 @@ class View:
             Method that displays the opening dialogue of the program
             
         """
-        print ("welcome to duo terminal: review duolingo words on your terminal")
-        resp = (input("select: (l)ogin or (q)uit \n")).lower()
-        if resp == "l":
-            return True
-        elif resp == "q":
-            return False
+        print ("welcome to duo terminal: review duolingo words on your terminal...")
+        resp = None
+        while (resp != 'l'):
+            resp = (getpass.getpass("select: (L)ogin or (Q)uit \n")).lower()
+            if resp == "l":
+                return True
+            elif resp == "q":
+                return False
+            else:
+                print ("(L)ogin or (Q)uit...")
     
     def displayWord(self, word):
         """
@@ -257,7 +262,7 @@ class View:
         password = getpass.getpass("enter password... \n")
         credentials = [username, password]
         return credentials
-        
+    
 if __name__ == "__main__":
     app = Controller()
     app.run()
