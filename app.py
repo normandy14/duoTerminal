@@ -10,7 +10,7 @@ from googletrans import Translator
 # TODO:
 # 1. Convert Translation (English to Target) Direction
 # 2. Show Number Correct, Number Incorrect
-# 3. Expand to More Languages
+# 3. Expand to More Languages (Get the languages the user has trees for)
 
 class Controller:
     """
@@ -52,7 +52,7 @@ class Controller:
                 flagHash = self.model.flagHash
             elif (resp == "e"):
                 wordHash = self.model.invertWordHash()
-                flagHash = self.model.targetFlagHash(wordHash.keys())
+                flagHash = self.model.makeNewFlagHash(wordHash.keys())
             self.iterateVocabHash(wordHash, flagHash)
             
         else:
@@ -162,18 +162,26 @@ class Model:
     """
     
     def invertWordHash(self):
-        hash_ = {}
+        """
+            Method that switches the pair order of keys and values in a hashmap. Keys -> Values. Values -> Keys
+            
+        """
+        invertHash = {}
         keys = list(self.wordHash.keys())
         values = list(self.wordHash.values())
         for i in range(len(values)):
-            hash_[values[i]] = keys[i]
-        return hash_
+            invertHash[values[i]] = keys[i]
+        return invertHash
         
-    def targetFlagHash(self, keys):
-        hash_ = {}
+    def makeNewFlagHash(self, keys):
+        """
+            Method that creates a new flag hashmap
+            
+        """
+        flagHash = {}
         for key in keys:
-            hash_[key] = 0
-        return hash_
+            flagHash[key] = 0
+        return flagHash
     
     def updateVocabHash(self, vocabHash, flagHash):
         """
