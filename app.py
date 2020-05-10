@@ -28,31 +28,35 @@ class Controller:
         """
         flag = self.view.display() # if the user selects to procede, then with the main program
         if flag == True:
+            wordHash = {}
             
-            # DEBUG: hashmap hardcoded for offline development
-            
-            '''
-            
+            loginFlag = False
+            while loginFlag != True:
+                
                 cred = self.view.getUserCredentials()
                 self.model.storeUserCredentials(cred[0], cred[1])
-                self.model.signIn()
-                self.model.pullVocab()
-                # Important: Delete Later!
-            
-            '''
-            
-            self.model.wordHash = {'hola' : 'hello', 'en' : 'in', 'tres' : 'three', 'casa' : 'house', 'ciudad' : 'city'}
-            self.model.flagHash = {'hola' : 0, 'en' : 0, 'tres' : 0, 'casa' : 0, 'ciudad' : 0}
+                self.view.displayOutput("signing into duolingo with credentials... ")
+                loginFlag = self.model.signIn()
+                
+                if loginFlag == False:
+                    self.view.displayOutput("signin unsuccessful...")
+                    self.view.displayOutput("try again!")
+                    
+            self.view.displayOutput("signin successful!")
+            self.view.displayOutput("obtaining vocabulary...")
+            self.model.pullVocab()
             self.model.translateToHash()
             
-            wordHash = {}
-            resp = (getpass.getpass("(T)arget to English, or (E)nglish to Target? \n")).lower()
+            self.view.displayOutput("(T)arget to English, or (E)nglish to Target? \n")
+            
+            resp = self.view.displayInput().lower()
             if (resp == "t"):
                 wordHash = self.model.wordHash
                 flagHash = self.model.flagHash
             elif (resp == "e"):
                 wordHash = self.model.invertWordHash()
                 flagHash = self.model.makeNewFlagHash(wordHash.keys())
+                
             self.iterateVocabHash(wordHash, flagHash)
             
         else:
@@ -68,6 +72,7 @@ class Controller:
         """
         flag = self.model.vocabFlag(flagHash) # boolean variable: default value is False
         while flag != True:
+            
             for key in wordHash:
                 input_ = self.view.displayWord(key) # gives the vocab word to the view, and gets the input translation from the user
                 value = wordHash[key]
@@ -75,6 +80,7 @@ class Controller:
             wordHash = self.model.updateVocabHash(wordHash, flagHash) # filter the vocabHash with the translated words
             
             flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
+            
             numCount = self.model.getNumCorrect(flagHash)
             self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount))
             
@@ -83,7 +89,7 @@ class Controller:
             Method that safely exits the program
             
         """
-        print ("until next time...")
+        self.view.displayOutput("until next time...")
         sys.exit()
         
 class Model:
@@ -124,12 +130,11 @@ class Model:
             
         """
         try:
-            print ("signing into duolingo with credentials... ")
             self.session = duolingo.Duolingo(self.username, self.password)
-            print ("signin successful!")
+            return True
         except:
-            print ("signin unsuccessful...")
-            print ("try again!")
+            return False
+
             self.storeUserCredentials()
             self.signIn()
             
@@ -252,6 +257,10 @@ class View:
         
     def displayOutput(self, output):
         print (output)
+        
+    def displayInput(self):
+        input_ = getpass.getpass("\n")
+        return input_
     
     def getUserCredentials(self):
         """
