@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import nose
-from app import Model
+from app.model import Model
 
 class TestClass:
     """
