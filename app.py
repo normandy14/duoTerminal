@@ -2,15 +2,14 @@
 
 import sys
 import getpass
-import copy
 import duolingo
 import hyper
 from googletrans import Translator
 
 # TODO:
-# 1. Convert Translation (English to Target) Direction
-# 2. Show Number Correct, Number Incorrect
-# 3. Expand to More Languages (Get the languages the user has trees for)
+# 2. Add Python Type Feature
+# 3. Seperate MVC into 3 Seperate Files
+# 4. Add more Language Support
 
 class Controller:
     """
@@ -26,41 +25,58 @@ class Controller:
             Method is the main method that orchestrates all the methods in the model, view, and controller
             
         """
-        flag = self.view.display() # if the user selects to procede, then with the main program
-        if flag == True:
-            wordHash = {}
-            
-            loginFlag = False
-            while loginFlag != True:
-                
-                cred = self.view.getUserCredentials()
-                self.model.storeUserCredentials(cred[0], cred[1])
-                self.view.displayOutput("signing into duolingo with credentials... ")
-                loginFlag = self.model.signIn()
-                
-                if loginFlag == False:
-                    self.view.displayOutput("signin unsuccessful...")
-                    self.view.displayOutput("try again!")
-                    
-            self.view.displayOutput("signin successful!")
-            self.view.displayOutput("obtaining vocabulary...")
-            self.model.pullVocab()
-            self.model.translateToHash()
-            
-            self.view.displayOutput("(T)arget to English, or (E)nglish to Target? \n")
-            
-            resp = self.view.displayInput().lower()
-            if (resp == "t"):
-                wordHash = self.model.wordHash
-                flagHash = self.model.flagHash
-            elif (resp == "e"):
-                wordHash = self.model.invertWordHash()
-                flagHash = self.model.makeNewFlagHash(wordHash.keys())
-                
+        run = self.view.display() # if the user selects to procede, then with the main program
+        if run == True:
+            self.storeCredentials()
+            self.storeSession()
+            self.dataToModel()
+            hashes = self.branchOutput()
+            wordHash = hashes[0]
+            flagHash = hashes[1]
             self.iterateVocabHash(wordHash, flagHash)
-            
         else:
             self.exit()
+            
+    def storeCredentials(self):
+        '''
+            Method that obtains from user duolingo credentials and stores it in the model
+            
+        '''
+        cred = self.view.getUserCredentials()
+        self.model.storeUserCredentials(cred[0], cred[1])
+    
+    def storeSession(self):
+        # given provided user credentials, attempt login into duolingo
+        self.view.displayOutput("signing into duolingo with credentials... ")
+        session = self.model.signIn()
+        if session is None:
+            # repeat the process until the user provides valid credentials
+            self.view.displayOutput("signin unsuccessful...")
+            self.view.displayOutput("try again!")
+            self.storeCredentials()
+            self.storeSession()
+        self.view.displayOutput("signin successful!")
+    
+    def dataToModel(self):
+        self.view.displayOutput("obtaining vocabulary...")
+        
+        # obtains learned words from the duolingo account and converts the words into a hashmap (dictionary)
+        self.model.pullVocab()
+        self.model.translateToHash()
+    
+    def branchOutput(self):
+        # ask if user wants to translate target language into english, or english into target language
+        self.view.displayOutput("(T)arget to English, or (E)nglish to Target? \n")
+        resp = self.view.displayInput()
+        if (resp == "t"):
+            wordHash = self.model.wordHash
+            flagHash = self.model.flagHash
+        elif (resp == "e"):
+            wordHash = self.model.invertWordHash()
+            flagHash = self.model.makeNewFlagHash(wordHash.keys())
+        hashes = [wordHash, flagHash]
+        return hashes
+        
     
     def iterateVocabHash(self, wordHash, flagHash):
         """
@@ -74,13 +90,15 @@ class Controller:
         while flag != True:
             
             for key in wordHash:
+                
+                 # MAKE INTO OWN METHOD (vocabIO)
                 input_ = self.view.displayWord(key) # gives the vocab word to the view, and gets the input translation from the user
                 value = wordHash[key]
                 flagHash = self.model.compareInput(key, value, input_, flagHash) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
+                
+            # MAKE INTO OWN METHOD (process hashmaps, return flag variable)
             wordHash = self.model.updateVocabHash(wordHash, flagHash) # filter the vocabHash with the translated words
-            
             flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
-            
             numCount = self.model.getNumCorrect(flagHash)
             self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount))
             
@@ -131,12 +149,9 @@ class Model:
         """
         try:
             self.session = duolingo.Duolingo(self.username, self.password)
-            return True
-        except:
             return False
-
-            self.storeUserCredentials()
-            self.signIn()
+        except:
+            return None
             
     def pullVocab(self):
         """
@@ -259,7 +274,7 @@ class View:
         print (output)
         
     def displayInput(self):
-        input_ = getpass.getpass("\n")
+        input_ = (getpass.getpass("\n")).lower()
         return input_
     
     def getUserCredentials(self):

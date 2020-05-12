@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 nose = "*"
+pylint = "*"
 
 [packages]
 duolingo-api = "*"
