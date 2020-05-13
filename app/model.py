@@ -117,6 +117,10 @@ class Model:
         return flagHash
     
     def getNumCorrect(self, flagHash):
+        """
+            Method that computes and returns the number of unlearned words remaining
+            
+        """
         filteredFlagHash = [key for (key, value) in flagHash.items() if value == 1]
         numCorrect = len(filteredFlagHash)
         return numCorrect
