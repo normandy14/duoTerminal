@@ -70,13 +70,45 @@ class Model:
     """
         The following methods:
         
-            translatetoHash(), updateVocabHash(), compareInput(), vocabFlag()
+            translatetoHash(), updateVocabHash(), vocabFlag()
         
         Interact with 'backend' of the program. It processes and interacts with the data pulled from the duolingo package,
         and sends it to the controller class
+            
+            
     
     """
     
+    def updateVocabHash(self, vocabHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, str]:
+        """
+            Method that filters out learned words from vocabHash
+            
+        """
+        listKnownWords = [key  for (key, value) in flagHash.items() if value == 1] # uses the flags in flagHash to determine in word is learned
+        filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords} # uses the listKnownWords to filter vocabHash
+        return filteredVocabHash
+        
+    def vocabFlag(self, flagHash: Dict[str, int]) -> bool:
+        """
+            Method that returns True if all words are translated correctly by the user
+            
+        """
+        if 0 in flagHash.values(): # searches if there are unlearned words in the hashmap
+            return False
+        return True
+    
+     """
+        The following methods:
+        
+            invertWordHash(), makeNewFlagHash(), compareInput(), getNumCorrect(),
+        
+        Are helper methods to the model class. They increase the modularity of the code by seperating
+        the procedural operations into small methods.
+        
+    
+    
+    """
+        
     def invertWordHash(self) -> Dict[str, str]:
         """
             Method that switches the pair order of keys and values in a hashmap. Keys -> Values. Values -> Keys
@@ -99,15 +131,6 @@ class Model:
             flagHash[key] = 0
         return flagHash
     
-    def updateVocabHash(self, vocabHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, str]:
-        """
-            Method that filters out learned words from vocabHash
-            
-        """
-        listKnownWords = [key  for (key, value) in flagHash.items() if value == 1] # uses the flags in flagHash to determine in word is learned
-        filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords} # uses the listKnownWords to filter vocabHash
-        return filteredVocabHash
-        
     def compareInput(self, key: str, value: str, input_: str, flagHash: Dict[str, int]) -> Dict[str, int]:
         """
             Method that compares user input with value (translation) in flagHash
@@ -116,6 +139,7 @@ class Model:
         if input_ == value:
             flagHash[key] = 1 # True, marks a learned word
         return flagHash
+        
     
     def getNumCorrect(self, flagHash: Dict[str, int]) -> int:
         """
@@ -125,13 +149,4 @@ class Model:
         filteredFlagHash = [key for (key, value) in flagHash.items() if value == 1]
         numCorrect = len(filteredFlagHash)
         return numCorrect
-        
-    def vocabFlag(self, flagHash: Dict[str, int]) -> bool:
-        """
-            Method that returns True if all words are translated correctly by the user
-            
-        """
-        if 0 in flagHash.values(): # searches if there are unlearned words in the hashmap
-            return False
-        return True
             
