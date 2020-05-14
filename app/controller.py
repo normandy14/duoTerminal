@@ -22,11 +22,11 @@ class Controller:
         """
         run = self.view.display() # if the user selects to procede, then with the main program
         if run == True:
-            self.storeCredentials()
-            self.storeSession()
-            self.dataToModel()
-            hashes = self.branchOutput()
-            wordHash = hashes[0]
+            self.storeCredentials() # gets the credentials from the user and store in class methods
+            self.storeSession() # gets the credentials to sign into duolingo via api, and then gets the user session and stores it in class method
+            self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
+            hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
+            wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
             self.iterateVocabHash(wordHash, flagHash)
         else:
@@ -37,7 +37,7 @@ class Controller:
             Method that obtains from user duolingo credentials and stores it in the model
             
         """
-        cred = self.view.getUserCredentials()
+        cred = self.view.getUserCredentials() # get the user credentials
         self.model.storeUserCredentials(cred[0], cred[1])
     
     def storeSession(self):
@@ -45,11 +45,10 @@ class Controller:
             Method that obtains from user duolingo credentials and stores it in the model
             
         """
-        # given provided user credentials, attempt login into duolingo
         self.view.displayOutput("signing into duolingo with credentials... ")
-        session = self.model.signIn()
+        session = self.model.signIn() # given provided user credentials, attempt login into duolingo
         if session is None:
-            self.repeatStoreSession()
+            self.repeatStoreSession() # the loop will repeat until valid credentials are given and signin succeeds
         self.view.displayOutput("signin successful!")
     
     def repeatStoreSession(self):
@@ -61,8 +60,8 @@ class Controller:
         """
         self.view.displayOutput("signin unsuccessful...")
         self.view.displayOutput("try again!")
-        self.storeCredentials()
-        self.storeSession()
+        self.storeCredentials() # see method for details
+        self.storeSession() # see method for detials
     
     def dataToModel(self):
         """
@@ -70,8 +69,8 @@ class Controller:
             
         """
         self.view.displayOutput("obtaining vocabulary...")
-        self.model.pullVocab()
-        self.model.translateToHash()
+        self.model.pullVocab() # store the vocab words in a list
+        self.model.translateToHash() # translates the vocab words in a list into a dictionary/ hashmap
     
     def branchOutput(self) -> List[Dict]:
         """
@@ -81,12 +80,12 @@ class Controller:
         self.view.displayOutput("(T)arget to English, or (E)nglish to Target? \n")
         resp = self.view.displayInput()
         if (resp == "t"):
-            wordHash = self.model.wordHash
-            flagHash = self.model.flagHash
+            wordHash = self.model.wordHash # store as is
+            flagHash = self.model.flagHash # store as is
         elif (resp == "e"):
-            wordHash = self.model.invertWordHash()
-            flagHash = self.model.makeNewFlagHash(wordHash.keys())
-        hashes = [wordHash, flagHash]
+            wordHash = self.model.invertWordHash() # reverse the order of keys and values
+            flagHash = self.model.makeNewFlagHash(wordHash.keys()) # remake the flagHash variable, but with English words as the key
+        hashes = [wordHash, flagHash] # return the two dictionaries in a list
         return hashes
         
     
@@ -101,18 +100,18 @@ class Controller:
         flag = self.model.vocabFlag(flagHash) # boolean variable: default value is False
         while flag != True:
             for key in wordHash:
-                self.vocabIO(key, wordHash, flagHash)
+                self.vocabIO(key, wordHash, flagHash) # give and get data from the view and model, respectively
             wordHash = self.model.updateVocabHash(wordHash, flagHash) # filter the vocabHash with the translated words
             flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
-            self.displayNumCorrect(flagHash)
+            self.displayNumCorrect(flagHash) # print to the view the number of remaining unlearned words
     
     def displayNumCorrect(self, flagHash: Dict[str, int]) -> None:
         """
             Method that computes and displays the number of remaining words unlearned
             
         """
-        numCount = self.model.getNumCorrect(flagHash)
-        self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount))
+        numCount = self.model.getNumCorrect(flagHash) # see method for detials
+        self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount)) # the computation gives the number of unlearned words
     
     def vocabIO(self, key: str, wordHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, int]:
         """
@@ -121,7 +120,7 @@ class Controller:
             
         """
         input_ = self.view.displayWord(key) # gives the vocab word to the view, and gets the input translation from the user
-        value = wordHash[key]
+        value = wordHash[key] # get the translation of the vocab word
         flagHash = self.model.compareInput(key, value, input_, flagHash) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
         return flagHash
         
