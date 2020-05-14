@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import typing
 import getpass
 
 class View:
@@ -26,7 +27,7 @@ class View:
             else:
                 print ("(L)ogin or (Q)uit...")
     
-    def displayWord(self, word):
+    def displayWord(self, word: str):
         """
             Method that displays the foreign word to the terminal, and retrieves user input
             
@@ -36,10 +37,18 @@ class View:
         input_ = input().lower()
         return input_
         
-    def displayOutput(self, output):
+    def displayOutput(self, output: str):
+        """
+            Method that displays input without any modifications
+            
+        """
         print (output)
         
     def displayInput(self):
+        """
+            Method that securely retrieves user input from user
+            
+        """
         input_ = (getpass.getpass("\n")).lower()
         return input_
     

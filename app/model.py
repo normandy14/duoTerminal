@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import typing
+from typing import List, Dict
 import duolingo
 import hyper
 from googletrans import Translator
@@ -27,7 +29,7 @@ class Model:
         
     """
     
-    def storeUserCredentials(self, username, password):
+    def storeUserCredentials(self, username: str, password: str) -> None:
         """
             Method that securely stores user's given username and password
             
@@ -35,8 +37,7 @@ class Model:
         self.username = username
         self.password = password
         
-    # Printing is done in the Model! Move to Controller and View!
-    def signIn(self):
+    def signIn(self) -> any:
         """
             Method that returns user session for duolingo user
             
@@ -47,7 +48,7 @@ class Model:
         except:
             return None
             
-    def pullVocab(self):
+    def pullVocab(self) -> None:
         """
             Method that retreives learned words from duolingo stores user's learned words in a list
             
@@ -55,7 +56,7 @@ class Model:
         self.vocab = self.session.get_known_words('es') # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
         self.vocab = self.vocab[:5] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
     
-    def translateToHash(self):
+    def translateToHash(self) -> None:
         """
             Method that converts vocabList into a hashmap (english -> foreign), and another hashmap with key mapped to default value of zero
             
@@ -76,7 +77,7 @@ class Model:
     
     """
     
-    def invertWordHash(self):
+    def invertWordHash(self) -> Dict[str, str]:
         """
             Method that switches the pair order of keys and values in a hashmap. Keys -> Values. Values -> Keys
             
@@ -88,7 +89,7 @@ class Model:
             invertHash[values[i]] = keys[i]
         return invertHash
         
-    def makeNewFlagHash(self, keys):
+    def makeNewFlagHash(self, keys: List[int]) -> Dict[str, int]:
         """
             Method that creates a new flag hashmap
             
@@ -98,7 +99,7 @@ class Model:
             flagHash[key] = 0
         return flagHash
     
-    def updateVocabHash(self, vocabHash, flagHash):
+    def updateVocabHash(self, vocabHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, str]:
         """
             Method that filters out learned words from vocabHash
             
@@ -107,7 +108,7 @@ class Model:
         filteredVocabHash = {key : value for (key, value) in vocabHash.items() if key not in listKnownWords} # uses the listKnownWords to filter vocabHash
         return filteredVocabHash
         
-    def compareInput(self, key, value, input_, flagHash):
+    def compareInput(self, key: str, value: str, input_: str, flagHash: Dict[str, int]) -> Dict[str, int]:
         """
             Method that compares user input with value (translation) in flagHash
             
@@ -116,7 +117,7 @@ class Model:
             flagHash[key] = 1 # True, marks a learned word
         return flagHash
     
-    def getNumCorrect(self, flagHash):
+    def getNumCorrect(self, flagHash: Dict[str, int]) -> int:
         """
             Method that computes and returns the number of unlearned words remaining
             
@@ -125,7 +126,7 @@ class Model:
         numCorrect = len(filteredFlagHash)
         return numCorrect
         
-    def vocabFlag(self, flagHash):
+    def vocabFlag(self, flagHash: Dict[str, int]) -> bool:
         """
             Method that returns True if all words are translated correctly by the user
             

@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
 import sys
+import typing
+from typing import List, Dict
 from app.model import Model
 from app.view import View
 
@@ -71,7 +73,7 @@ class Controller:
         self.model.pullVocab()
         self.model.translateToHash()
     
-    def branchOutput(self):
+    def branchOutput(self) -> List[Dict]:
         """
             Method that obtains user input. The input determines the batch of methods that are run
             
@@ -88,7 +90,7 @@ class Controller:
         return hashes
         
     
-    def iterateVocabHash(self, wordHash, flagHash):
+    def iterateVocabHash(self, wordHash: Dict[str, str], flagHash: Dict[str, int]) -> None:
         """
             Method orchestrates the interactions between the model(data) and view(user)
             
@@ -104,7 +106,7 @@ class Controller:
             flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
             self.displayNumCorrect(flagHash)
     
-    def displayNumCorrect(self, flagHash):
+    def displayNumCorrect(self, flagHash: Dict[str, int]) -> None:
         """
             Method that computes and displays the number of remaining words unlearned
             
@@ -112,7 +114,7 @@ class Controller:
         numCount = self.model.getNumCorrect(flagHash)
         self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount))
     
-    def vocabIO(self, key, wordHash, flagHash):
+    def vocabIO(self, key: str, wordHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, int]:
         """
             Method that displays the vocab word to the view and obtains the translation input from the user
             It also compares the user translation and recorded translation with the compareInput method
