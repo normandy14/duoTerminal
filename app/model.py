@@ -97,7 +97,7 @@ class Model:
             return False # at first occurence of 0/ if any occurence of 0, return False; meaning of 0: word is unlearned
         return True
     
-     """
+    """
         The following methods:
         
             invertWordHash(), makeNewFlagHash(), compareInput(), getNumCorrect(),
@@ -113,7 +113,7 @@ class Model:
             Method that switches the pair order of keys and values in a hashmap. Keys -> Values. Values -> Keys
             
         """
-        invertHash = {
+        invertHash = {}
         keys = list(self.wordHash.keys()) # put all the keys of the dictionary in a list
         values = list(self.wordHash.values()) # put all the values of the dictionary in a list
         for i in range(len(values)):

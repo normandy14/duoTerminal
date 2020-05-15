@@ -11,6 +11,11 @@ Or try your hand at translating from English to your target language. The choice
 
 The words that you missed or repeating until you've completed the translation cycle.
 
+## Motivation
+
+Duoterminal is a project created for the user that wants to supplement their language learning on the Duolingo platform with additional learning tools. Duolingo is a great learning tool, but its web/android/ios iterface is bulky. The main app also forces user to learn and reinforce learned words in sentences.
+
+DuoTerminal allows for reinforcement of learned words in isolation. It also requires the user to type in by hand the translation of the individual words, unlike the Duolingo app which encourages the user to click the correct translation of a sentence.
 
 ## Getting Started
 
@@ -102,16 +107,24 @@ Ran 14 tests in 0.005s
 OK
 ```
 <!--
+
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 -->
+
+## Python Libraries
+
+1. [Duolingo](https://github.com/KartikTalwar/Duolingo/) -- Unofficial Duolingo API Wrapper
+2. [Hyper](https://github.com/python-hyper/hyper/) -- HTTP/2 Client for Python
+3. [Google Trans](https://github.com/ssut/py-googletrans/) -- Unofficial Google Translate API Wrapper
+
+## Recommendation for Future Versions of App
+
+Google Trans library is an unoffical api, and we highly recommend for it to be replaced with the official Google Translate service in Google Cloud Platform. However, the offical Google Translate service has a financial cost. It is highly recommended because the unoffical api has poor speed performance. The offical service will signifantly reduce network runtime.
+
+It is also recommended that a graphical api be added such as VueJs or ReactJs.
 
 ## Contributing
 
@@ -130,9 +143,11 @@ We use [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03) for version
 This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
 
 <!--
+
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used
 * Inspiration
 * etc
+
 -->
