@@ -5,6 +5,7 @@ from typing import List, Dict
 import duolingo
 import hyper
 from googletrans import Translator
+from app.database import Database
 
 class Model:
     """
@@ -18,6 +19,7 @@ class Model:
         self.vocab = []
         self.wordHash = {}
         self.flagHash = {}
+        self.db = Database()
     
     """
         The following methods:
@@ -48,6 +50,16 @@ class Model:
         except:
             return None # used as a marker for conditional statement in the controller class methods its called from
             
+    def compareAccountToTable(self):
+        vocab = self.session.get_known_words('es')[:5] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
+        countAccount = len(vocab)
+        countRows = self.db.numOfEntries()
+        print ("countAccount : {}".format(countAccount))
+        print ("countRows : {}".format(countRows))
+        if countAccount == countRows:
+            return True
+        return False
+    
     def pullVocab(self) -> None:
         """
             Method that retreives learned words from duolingo stores user's learned words in a list
@@ -139,7 +151,6 @@ class Model:
             flagHash[key] = 1 # True, marks a word as learned
         return flagHash
         
-    
     def getNumCorrect(self, flagHash: Dict[str, int]) -> int:
         """
             Method that computes and returns the number of unlearned words remaining

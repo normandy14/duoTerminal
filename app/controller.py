@@ -24,7 +24,13 @@ class Controller:
         if run == True:
             self.storeCredentials() # gets the credentials from the user and store in class methods
             self.storeSession() # gets the credentials to sign into duolingo via api, and then gets the user session and stores it in class method
-            self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
+            self.model.db.sqlConn()
+            if self.model.compareAccountToTable() == True:
+                print ("getting data from table...")
+                wordHash = self.model.db.tableToHash()
+            else:
+                print ("getting data from api...")
+                self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
@@ -69,6 +75,9 @@ class Controller:
             
         """
         self.view.displayOutput("obtaining vocabulary...")
+        if self.model.compareAccountToTable() == True:
+            print ("getting from table...")
+        print ("getting from api...")
         self.model.pullVocab() # store the vocab words in a list
         self.model.translateToHash() # translates the vocab words in a list into a dictionary/ hashmap
     
@@ -87,7 +96,6 @@ class Controller:
             flagHash = self.model.makeNewFlagHash(wordHash.keys()) # remake the flagHash variable, but with English words as the key
         hashes = [wordHash, flagHash] # return the two dictionaries in a list
         return hashes
-        
     
     def iterateVocabHash(self, wordHash: Dict[str, str], flagHash: Dict[str, int]) -> None:
         """
@@ -124,7 +132,6 @@ class Controller:
         flagHash = self.model.compareInput(key, value, input_, flagHash) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
         return flagHash
         
-            
     def exit(self):
         """
             Method that safely exits the program
