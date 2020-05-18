@@ -2,16 +2,18 @@
 
 import typing
 import getpass
+import typing
+from typing import List, Dict
 
 class View:
     """
         Class that orchestrates the interactions between program and the terminal
         
     """
-    def __init__(self):
+    def __init__(self) -> None:
         pass
         
-    def display(self):
+    def display(self) -> bool:
         """
             Method that displays the opening dialogue of the program
             
@@ -27,7 +29,7 @@ class View:
             else:
                 print ("(L)ogin or (Q)uit...")
     
-    def displayWord(self, word: str):
+    def displayWord(self, word: str) -> str:
         """
             Method that displays the foreign word to the terminal, and retrieves user input
             
@@ -37,14 +39,14 @@ class View:
         input_ = input().lower() # store the user input in the variable
         return input_
         
-    def displayOutput(self, output: str):
+    def displayOutput(self, output: str) -> None:
         """
             Method that displays input without any modifications
             
         """
         print (output)
         
-    def displayInput(self):
+    def displayInput(self) -> str:
         """
             Method that securely retrieves user input from user
             
@@ -52,7 +54,7 @@ class View:
         input_ = (getpass.getpass("\n")).lower() # securely store the user input in the variable
         return input_
     
-    def getUserCredentials(self):
+    def getUserCredentials(self) -> List[str]:
         """
             Method that securely stores user's given username and password
             

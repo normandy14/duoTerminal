@@ -15,7 +15,7 @@ class Controller:
         self.model = Model()
         self.view = View()
     
-    def run(self):
+    def run(self) -> None:
         """
             Method is the main method that orchestrates all the methods in the model, view, and controller
             
@@ -35,10 +35,11 @@ class Controller:
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
             self.iterateVocabHash(wordHash, flagHash)
+            self.model.closeDb()
         else:
             self.exit()
             
-    def storeCredentials(self):
+    def storeCredentials(self) -> None:
         """
             Method that obtains from user duolingo credentials and stores it in the model
             
@@ -46,7 +47,7 @@ class Controller:
         cred = self.view.getUserCredentials() # get the user credentials
         self.model.storeUserCredentials(cred[0], cred[1])
     
-    def storeSession(self):
+    def storeSession(self) -> None:
         """
             Method that obtains from user duolingo credentials and stores it in the model
             
@@ -57,7 +58,7 @@ class Controller:
             self.repeatStoreSession() # the loop will repeat until valid credentials are given and signin succeeds
         self.view.displayOutput("signin successful!")
     
-    def repeatStoreSession(self):
+    def repeatStoreSession(self) -> None:
         """
             Method that obtains from user duolingo credentials and stores it in the model
             
@@ -69,7 +70,7 @@ class Controller:
         self.storeCredentials() # see method for details
         self.storeSession() # see method for detials
     
-    def dataToModel(self):
+    def dataToModel(self) -> None:
         """
             Method that orchestrates obtaining from duolingo vocabulary words and converts the words from a list to a hashmap
             
@@ -78,13 +79,13 @@ class Controller:
         self.model.pullVocab() # store the vocab words in a list
         self.model.translateToHash() # translates the vocab words in a list into a dictionary/ hashmap
     
-    def dataToTable(self):
+    def dataToTable(self) -> None:
         """
             Method that orchestrates obtaining from duolingo vocabulary words and converts the words from a list to a hashmap
             
         """
         self.view.displayOutput("loading data...")
-        self.model.getHashFromTable()
+        self.model.queryHashFromTable()
         keys = list(self.model.getWordHash().keys())
         flagHash = self.model.makeNewFlagHash(keys)
         self.model.setFlagHash(flagHash)
@@ -140,7 +141,7 @@ class Controller:
         flagHash = self.model.compareInput(key, value, input_, flagHash) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
         return flagHash
         
-    def exit(self):
+    def exit(self) -> None:
         """
             Method that safely exits the program
             

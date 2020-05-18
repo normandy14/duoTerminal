@@ -24,7 +24,7 @@ class Model:
     """
         The following methods:
         
-            userCredentials(), signIn(), pullVocab(), translateToHash()
+            storeUserCredentials(), signIn(), pullVocab(), translateToHash()
         
         Interact with web services using the duolingo package.
         It requires HTTP/s and a network connect to the internet
@@ -49,14 +49,6 @@ class Model:
             return True # boolean value has no meaning; simply differentiate from None
         except:
             return None # used as a marker for conditional statement in the controller class methods its called from
-            
-    def compareApiToTable(self):
-        vocab = self.session.get_known_words('es')[:5] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
-        countAccount = len(vocab)
-        countRows = self.db.numOfEntries()
-        if countAccount == countRows:
-            return True
-        return False
     
     def pullVocab(self) -> None:
         """
@@ -77,14 +69,16 @@ class Model:
             self.wordHash[translation.origin] = translation.text.lower() # store the foreign language word as the key with corresponding english translation
             self.flagHash[translation.origin] = 0 # every word in this dictionary is, by default, unlearned`
     
-    def getHashFromTable(self):
-        self.wordHash = self.db.tableToHash()
-    
-    def getWordHash(self):
-        return self.wordHash
-    
-    def setFlagHash(self, hashmap):
-        self.flagHash = hashmap
+    """
+        The following methods:
+        
+            updateVocabHash(), vocabFlag(), invertWordHash(), makeNewFlagHash(), compareInput(), getNumCorrect(),
+        
+        Are helper methods to the model class. They increase the modularity of the code by seperating
+        the procedural operations into small methods.
+        
+
+    """
     
     def updateVocabHash(self, vocabHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, str]:
         """
@@ -103,17 +97,6 @@ class Model:
         if 0 in flagHash.values(): # searches if there are unlearned words in the hashmap
             return False # at first occurence of 0/ if any occurence of 0, return False; meaning of 0: word is unlearned
         return True
-    
-    """
-        The following methods:
-        
-            invertWordHash(), makeNewFlagHash(), compareInput(), getNumCorrect(),
-        
-        Are helper methods to the model class. They increase the modularity of the code by seperating
-        the procedural operations into small methods.
-        
-
-    """
         
     def invertWordHash(self) -> Dict[str, str]:
         """
@@ -150,8 +133,71 @@ class Model:
         """
             Method that computes and returns the number of unlearned words remaining
             
+            Bug Note: length of api and length of table not a true measure of equality. ie. new user signs in with the same number of vocab words as a previous user
+            
         """
         filteredFlagHash = [key for (key, value) in flagHash.items() if value == 1] # remove all the unlearned words
         numCorrect = len(filteredFlagHash) # the number of words that the user translated correctly (learned words)
         return numCorrect
+
+    """
+        The following methods:
+        
+            compareApiToTable(), queryHashFromTable(), closeDb()
+        
+        Interact with sqlite3 database using the database class.
+        These methods abstract the methods in the database class so that the developer does not have to interact with the database class directly
+        
+        
+    """
+    def compareApiToTable(self) -> bool:
+        """
+            Method that compares the number of entries in the user's account with the number of rows in the databse. The program returns a boolean value. True if equal. False otherwise.
             
+            The boolean value represents equality of length
+            
+        """
+        vocab = self.session.get_known_words('es')[:5] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
+        countAccount = len(vocab) # the number of entries stored in the user's account
+        countRows = self.db.numOfEntries() # method the returns length (number of rows) in the table
+        if countAccount == countRows:
+            return True
+        return False
+    
+    def queryHashFromTable(self) -> None:
+        """
+            Method that converts the rows in the table in the database into a hashmap and assigns the value into a model class variable
+            
+        """
+        self.wordHash = self.db.tableToHash()
+        
+    def closeDb(self) -> None:
+        """
+            Method that safely closes the database
+            
+        """
+        self.db.con.close()
+        
+    """
+        The following methods:
+        
+            getwordHash(), setFlagHash()
+        
+        Are getter and setter methods for model class
+        These methods abstract class variables so that the developer does not have to interact with them directly
+            
+    """
+    
+    def getWordHash(self):
+        """
+            Method that returns the value assigned in wordHash
+            
+        """
+        return self.wordHash
+    
+    def setFlagHash(self, hashmap):
+        """
+            Method that assigns the parameter hashmap to the flaghash variable
+            
+        """
+        self.flagHash = hashmap
