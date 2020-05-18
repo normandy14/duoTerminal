@@ -31,6 +31,8 @@ class Controller:
             else:
                 print ("getting data from api...")
                 self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
+                wordHash = self.model.getWordHash()
+                self.model.queryHashToTable(wordHash)
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]

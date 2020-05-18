@@ -79,7 +79,5 @@ class Database:
         self.con.close()
     
 # TODO:
-# If method returns False, then store the api hashmap in the db
 # Replace SQL statements with Pony
-# Rerun Pydoc
 # Create Mock object for tests

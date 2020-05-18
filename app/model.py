@@ -150,6 +150,7 @@ class Model:
         
         
     """
+    
     def compareApiToTable(self) -> bool:
         """
             Method that compares the number of entries in the user's account with the number of rows in the databse. The program returns a boolean value. True if equal. False otherwise.
@@ -170,6 +171,13 @@ class Model:
             
         """
         self.wordHash = self.db.tableToHash()
+    
+    def queryHashToTable(self, hashmap) -> None:
+        """
+            Method that converts the entries in the hashmap into rows for the table in the database
+            
+        """
+        self.db.hashToTable(hashmap)
         
     def closeDb(self) -> None:
         """
