@@ -7,6 +7,7 @@ verify_ssl = true
 nose = "*"
 pylint = "*"
 pdoc3 = "*"
+pydoc = "*"
 
 [packages]
 duolingo-api = "*"
