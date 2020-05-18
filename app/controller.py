@@ -24,10 +24,10 @@ class Controller:
         if run == True:
             self.storeCredentials() # gets the credentials from the user and store in class methods
             self.storeSession() # gets the credentials to sign into duolingo via api, and then gets the user session and stores it in class method
-            self.model.db.sqlConn()
-            if self.model.compareAccountToTable() == True:
+            if self.model.compareApiToTable() == True:
                 print ("getting data from table...")
-                wordHash = self.model.db.tableToHash()
+                # TODO: Create method in model to interact with db
+                self.dataToTable()
             else:
                 print ("getting data from api...")
                 self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
@@ -75,11 +75,19 @@ class Controller:
             
         """
         self.view.displayOutput("obtaining vocabulary...")
-        if self.model.compareAccountToTable() == True:
-            print ("getting from table...")
-        print ("getting from api...")
         self.model.pullVocab() # store the vocab words in a list
         self.model.translateToHash() # translates the vocab words in a list into a dictionary/ hashmap
+    
+    def dataToTable(self):
+        """
+            Method that orchestrates obtaining from duolingo vocabulary words and converts the words from a list to a hashmap
+            
+        """
+        self.view.displayOutput("loading data...")
+        self.model.getHashFromTable()
+        keys = list(self.model.getWordHash().keys())
+        flagHash = self.model.makeNewFlagHash(keys)
+        self.model.setFlagHash(flagHash)
     
     def branchOutput(self) -> List[Dict]:
         """

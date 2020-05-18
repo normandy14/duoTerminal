@@ -9,6 +9,8 @@ class Database:
     def __init__(self):
         self.con = None
         self.cur = None
+        self.sqlConn()
+        self.createTable() # Make  check to see if table already exists!
     
     def sqlConn(self):
         try:
@@ -34,23 +36,27 @@ class Database:
 
     def tableToHash(self):
         wordHash = {}
-        self.cur.execute('SELECT target, english FROM translation')
+        self.cur.execute("SELECT target, english FROM translation")
         rows = self.cur.fetchall()
         for row in rows:
             wordHash[row[0]] = row[1]
         return wordHash
 
     def numOfEntries(self):
-        self.cur.execute('SELECT target, english FROM translation')
+        self.cur.execute("SELECT target, english FROM translation")
         rows = self.cur.fetchall()
         count = len(rows)
         return count
     
 # TODO:
-# Get data from self.pullVocab()
-# Conditional statement to see if rows have been populated
-# if not, then self.dataToModel() then store data into persistent storage
-# if yes, then condiitonal statement and pull data from table using tableToHash method, skipping the slow google api module
+# Document database class and document model class
+# Type cast all new methods and methods missed
+# If method returns False, then store the api hashmap in the db
+# Replace SQL statements with Pony
+# Bug: length of api and length of table not a true measure of equality. ie. new user signs in with the same number of vocab words as a previous user
+# Rerun Pydoc
+# Create Mock object for tests
+# Create getter and setters for model
 
 '''
 try:

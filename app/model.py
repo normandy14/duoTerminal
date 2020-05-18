@@ -50,12 +50,10 @@ class Model:
         except:
             return None # used as a marker for conditional statement in the controller class methods its called from
             
-    def compareAccountToTable(self):
+    def compareApiToTable(self):
         vocab = self.session.get_known_words('es')[:5] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
         countAccount = len(vocab)
         countRows = self.db.numOfEntries()
-        print ("countAccount : {}".format(countAccount))
-        print ("countRows : {}".format(countRows))
         if countAccount == countRows:
             return True
         return False
@@ -77,19 +75,16 @@ class Model:
         translations = translator.translate(self.vocab) # method of googletrans constructor
         for translation in translations:
             self.wordHash[translation.origin] = translation.text.lower() # store the foreign language word as the key with corresponding english translation
-            self.flagHash[translation.origin] = 0 # every word in this dictionary is, by default, unlearned
+            self.flagHash[translation.origin] = 0 # every word in this dictionary is, by default, unlearned`
     
-    """
-        The following methods:
-        
-            translatetoHash(), updateVocabHash(), vocabFlag()
-        
-        Interact with 'backend' of the program. It processes and interacts with the data pulled from the duolingo package,
-        and sends it to the controller class
-            
-            
+    def getHashFromTable(self):
+        self.wordHash = self.db.tableToHash()
     
-    """
+    def getWordHash(self):
+        return self.wordHash
+    
+    def setFlagHash(self, hashmap):
+        self.flagHash = hashmap
     
     def updateVocabHash(self, vocabHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, str]:
         """
