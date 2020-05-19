@@ -32,7 +32,14 @@ class Database:
         
         """
         try:
-            self.cur.execute("CREATE TABLE translation (target text PRIMARY KEY, english text)")
+            self.cur.execute("CREATE TABLE IF NOT EXISTS translation (target text PRIMARY KEY, english text)")
+            self.con.commit()
+        except Error:
+            print (Error)
+    
+    def dropTable(self) -> None:
+        try:
+            self.cur.execute("DROP TABLE if EXISTS translation")
             self.con.commit()
         except Error:
             print (Error)

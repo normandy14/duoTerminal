@@ -56,7 +56,7 @@ class Model:
             
         """
         self.vocab = self.session.get_known_words('es') # TO SPEED UP DEVELOPMENT: GENERALIZE LATER! # used to retrieve list of all learned words that user has learned
-        self.vocab = self.vocab[:5] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
+        self.vocab = self.vocab[:12] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
     
     def translateToHash(self) -> None:
         """
@@ -158,9 +158,11 @@ class Model:
             The boolean value represents equality of length
             
         """
-        vocab = self.session.get_known_words('es')[:5] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
+        vocab = self.session.get_known_words('es')[:12] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
         countAccount = len(vocab) # the number of entries stored in the user's account
         countRows = self.db.numOfEntries() # method the returns length (number of rows) in the table
+        print (countAccount)
+        print (countRows)
         if countAccount == countRows:
             return True
         return False
@@ -178,6 +180,12 @@ class Model:
             
         """
         self.db.hashToTable(hashmap)
+    
+    def dropTable(self) -> None:
+        self.db.dropTable()
+    
+    def createTable(self) -> None:
+        self.db.createTable()
         
     def closeDb(self) -> None:
         """

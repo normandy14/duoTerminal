@@ -24,15 +24,17 @@ class Controller:
         if run == True:
             self.storeCredentials() # gets the credentials from the user and store in class methods
             self.storeSession() # gets the credentials to sign into duolingo via api, and then gets the user session and stores it in class method
-            if self.model.compareApiToTable() == True:
+            numEntriesComp = self.model.compareApiToTable()
+            if numEntriesComp == True:
                 print ("getting data from table...")
-                # TODO: Create method in model to interact with db
                 self.dataToTable()
             else:
-                print ("getting data from api...")
+                print ("getting data from api and creating table...")
                 self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
-                wordHash = self.model.getWordHash()
-                self.model.queryHashToTable(wordHash)
+                wordHash = self.model.getWordHash() # creates a wordhash hashmap from the model
+                self.model.dropTable()
+                self.model.createTable()
+                self.model.queryHashToTable(wordHash) # inserts the entries in the hashmap into the model
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
