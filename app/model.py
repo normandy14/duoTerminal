@@ -72,18 +72,11 @@ class Model:
         self.wordHash = self.filterDuplHashmap(self.wordHash)
         self.flagHash = self.filterDuplHashmap(self.flagHash)
     
-    def filterDuplHashmap(self, hashmap):
-        """
-            Method that filters/removes entries from a hashmap that have identical key and value. When google translate api cannot find a direct translation, it puts the target language word as the english translation. Thus, the word cannot be correctly translated by the user. Hence, its removal.
-            
-        """
-        hashmap = {key : value for (key, value) in hashmap.items() if key != value}
-        return hashmap
         
     """
         The following methods:
         
-            updateVocabHash(), vocabFlag(), invertWordHash(), makeNewFlagHash(), compareInput(), getNumCorrect(),
+            updateVocabHash(), vocabFlag(), invertWordHash(), makeNewFlagHash(), compareInput(), getNumCorrect(), filterDuplHashmap()
         
         Are helper methods to the model class. They increase the modularity of the code by seperating
         the procedural operations into small methods.
@@ -150,11 +143,19 @@ class Model:
         filteredFlagHash = [key for (key, value) in flagHash.items() if value == 1] # remove all the unlearned words
         numCorrect = len(filteredFlagHash) # the number of words that the user translated correctly (learned words)
         return numCorrect
+        
+    def filterDuplHashmap(self, hashmap):
+        """
+            Method that filters/removes entries from a hashmap that have identical key and value. When google translate api cannot find a direct translation, it puts the target language word as the english translation. Thus, the word cannot be correctly translated by the user. Hence, its removal.
+            
+        """
+        hashmap = {key : value for (key, value) in hashmap.items() if key != value}
+        return hashmap
 
     """
         The following methods:
         
-            compareApiToTable(), queryHashFromTable(), recreateTable(), closeDb()
+            compareApiToTable(), queryHashFromTable(), queryHashToTable(), saveDataToPersistentStorage(), recreateTable(), closeDb()
         
         Interact with sqlite3 database using the database class.
         These methods abstract the methods in the database class so that the developer does not have to interact with the database class directly
@@ -176,11 +177,6 @@ class Model:
             return True
         return False
     
-    def saveDataToPersistentStorage(self) -> None:
-        wordHash = self.model.getWordHash() # creates a wordhash hashmap from the model
-        self.model.recreateTable() # delete and create (clear) the translation table
-        self.model.queryHashToTable(wordHash) # inserts the entries in the hashmap into the database, so that at next run data will remain persistent
-    
     def queryHashFromTable(self) -> None:
         """
             Method that converts the rows in the table in the database into a hashmap and assigns the value into a model class variable
@@ -194,6 +190,11 @@ class Model:
             
         """
         self.db.hashToTable(hashmap)
+        
+    def saveDataToPersistentStorage(self) -> None:
+        wordHash = self.model.getWordHash() # creates a wordhash hashmap from the model
+        self.model.recreateTable() # delete and create (clear) the translation table
+        self.model.queryHashToTable(wordHash) # inserts the entries in the hashmap into the database, so that at next run data will remain persistent
     
     def recreateTable(self) -> None:
         """

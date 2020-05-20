@@ -5,7 +5,7 @@ from typing import List, Dict
 
 class Database:
     """
-        Class that contains the methods that interact with the 'backend' and data of the program
+        Class that contains the methods that interact with the sqlite3 database of the program
         
     """
         

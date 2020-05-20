@@ -25,7 +25,7 @@ class Controller:
             self.storeCredentials() # gets the credentials from the user and store in class methods
             self.storeSession() # gets the credentials to sign into duolingo via api, and then gets the user session and stores it in class method
             numEntriesComp = self.model.compareApiToTable() # boolean value for equality
-            self.branchGetData(numEntriesComp)
+            self.branchGetData(numEntriesComp) # load data into model
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
@@ -140,7 +140,7 @@ class Controller:
     """
         The following methods:
         
-            branchGetData(), branchOutput()
+            iterateVocabHash(), vocabIO(), displayNumCorrect()
         
         address getting the model data to the view and getting the user input to the model
         
@@ -154,12 +154,12 @@ class Controller:
             For loop repeats without the correctly translated words
             
         """
-        flag = self.model.vocabFlag(flagHash) # boolean variable: default value is False
+        userSolvedAll = self.model.vocabFlag(flagHash) # boolean variable: default value is False
         while flag != True:
             for key in wordHash:
                 self.vocabIO(key, wordHash, flagHash) # give and get data from the view and model, respectively
             wordHash = self.model.updateVocabHash(wordHash, flagHash) # filter the vocabHash with the translated words
-            flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
+            userSolvedAll = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
             self.displayNumCorrect(flagHash) # print to the view the number of remaining unlearned words
     
     def vocabIO(self, key: str, wordHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, int]:
@@ -170,7 +170,7 @@ class Controller:
         """
         input_ = self.view.displayWord(key) # gives the vocab word to the view, and gets the input translation from the user
         value = wordHash[key] # get the translation of the vocab word
-        flagHash = self.model.compareInput(key, value, input_, flagHash) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
+        flagHash = self.model.compareInput(key, value, input_, flagHash) # boolean variable that compares user input with translation
         return flagHash
     
     def displayNumCorrect(self, flagHash: Dict[str, int]) -> None:
