@@ -24,14 +24,8 @@ class Controller:
         if run == True:
             self.storeCredentials() # gets the credentials from the user and store in class methods
             self.storeSession() # gets the credentials to sign into duolingo via api, and then gets the user session and stores it in class method
-            numEntriesComp = self.model.compareApiToTable()
-            if numEntriesComp == True:
-                print ("getting data from table...")
-                self.dataToTable()
-            else:
-                print ("getting data from api and creating table...")
-                self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
-                self.saveDataToPersistentStorage()
+            numEntriesComp = self.model.compareApiToTable() # boolean value for equality
+            self.branchGetData(numEntriesComp)
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
@@ -39,6 +33,15 @@ class Controller:
             self.model.closeDb()
         else:
             self.exit()
+    
+    """
+        The following methods:
+        
+            storeCredentials(), storeSession(), repeatStoreSession()
+        
+        address user authentication and storage
+            
+    """
             
     def storeCredentials(self) -> None:
         """
@@ -71,6 +74,15 @@ class Controller:
         self.storeCredentials() # see method for details
         self.storeSession() # see method for detials
     
+    """
+        The following methods:
+        
+            dataToModel(), dataFromTable()
+        
+        address getting vocabulary data and storing the data in storage
+            
+    """
+    
     def dataToModel(self) -> None:
         """
             Method that orchestrates obtaining from duolingo vocabulary words and converts the words from a list to a hashmap
@@ -80,7 +92,7 @@ class Controller:
         self.model.pullVocab() # store the vocab words in a list
         self.model.translateToHash() # translates the vocab words in a list into a dictionary/ hashmap
     
-    def dataToTable(self) -> None:
+    def dataFromTable(self) -> None:
         """
             Method that orchestrates obtaining from duolingo vocabulary words and converts the words from a list to a hashmap
             
@@ -91,6 +103,24 @@ class Controller:
         flagHash = self.model.makeNewFlagHash(keys)
         self.model.setFlagHash(flagHash) # setter method
     
+    """
+        The following methods:
+        
+            branchGetData(), branchOutput()
+        
+        address getting branches (if/else) statements that determine the flow of methods executed in the program
+            
+    """
+    
+    def branchGetData(self, lenComp: bool) -> None:
+        if lenComp == True: # same lengrh
+            self.view.displayOutput("getting data from table...")
+            self.dataFromTable() # get data from table and store in model
+        else:
+            self.view.displayOutput("getting data from api and creating table...")
+            self.dataToModel() # get the data from duolingo via api, and stores the data in the model
+            self.saveDataToPersistentStorage()
+        
     def branchOutput(self) -> List[Dict]:
         """
             Method that obtains user input. The input determines the batch of methods that are run
@@ -106,6 +136,15 @@ class Controller:
             flagHash = self.model.makeNewFlagHash(wordHash.keys()) # remake the flagHash variable, but with English words as the key
         hashes = [wordHash, flagHash] # return the two dictionaries in a list
         return hashes
+    
+    """
+        The following methods:
+        
+            branchGetData(), branchOutput()
+        
+        address getting the model data to the view and getting the user input to the model
+        
+     """
     
     def iterateVocabHash(self, wordHash: Dict[str, str], flagHash: Dict[str, int]) -> None:
         """
@@ -123,14 +162,6 @@ class Controller:
             flag = self.model.vocabFlag(flagHash) # if all words are translated correctly, then update the flag variable
             self.displayNumCorrect(flagHash) # print to the view the number of remaining unlearned words
     
-    def displayNumCorrect(self, flagHash: Dict[str, int]) -> None:
-        """
-            Method that computes and displays the number of remaining words unlearned
-            
-        """
-        numCount = self.model.getNumCorrect(flagHash) # see method for detials
-        self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount)) # the computation gives the number of unlearned words
-    
     def vocabIO(self, key: str, wordHash: Dict[str, str], flagHash: Dict[str, int]) -> Dict[str, int]:
         """
             Method that displays the vocab word to the view and obtains the translation input from the user
@@ -141,6 +172,14 @@ class Controller:
         value = wordHash[key] # get the translation of the vocab word
         flagHash = self.model.compareInput(key, value, input_, flagHash) # if user input is the same as translation, then stores 1 in flaghashmap; otherwise 0
         return flagHash
+    
+    def displayNumCorrect(self, flagHash: Dict[str, int]) -> None:
+        """
+            Method that computes and displays the number of remaining words unlearned
+            
+        """
+        numCount = self.model.getNumCorrect(flagHash) # see method for detials
+        self.view.displayOutput("Number remaining: {} ".format(len(flagHash) - numCount)) # the computation gives the number of unlearned words
         
     def exit(self) -> None:
         """
