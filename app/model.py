@@ -172,11 +172,14 @@ class Model:
         vocab = self.session.get_known_words('es')[:14] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
         countAccount = len(vocab) # the number of entries stored in the user's account
         countRows = self.db.numOfEntries() # method the returns length (number of rows) in the table
-        print (countAccount)
-        print (countRows)
         if countAccount == countRows:
             return True
         return False
+    
+    def saveDataToPersistentStorage(self) -> None:
+        wordHash = self.model.getWordHash() # creates a wordhash hashmap from the model
+        self.model.recreateTable() # delete and create (clear) the translation table
+        self.model.queryHashToTable(wordHash) # inserts the entries in the hashmap into the database, so that at next run data will remain persistent
     
     def queryHashFromTable(self) -> None:
         """

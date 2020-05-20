@@ -31,9 +31,7 @@ class Controller:
             else:
                 print ("getting data from api and creating table...")
                 self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
-                wordHash = self.model.getWordHash() # creates a wordhash hashmap from the model
-                self.model.recreateTable()
-                self.model.queryHashToTable(wordHash) # inserts the entries in the hashmap into the model
+                self.saveDataToPersistentStorage()
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
