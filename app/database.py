@@ -38,6 +38,10 @@ class Database:
             print (Error)
     
     def dropTable(self) -> None:
+        """
+            Method that deletes the translation table in the database
+        
+        """
         try:
             self.cur.execute("DROP TABLE if EXISTS translation")
             self.con.commit()
@@ -86,5 +90,4 @@ class Database:
         self.con.close()
     
 # TODO:
-# Replace SQL statements with Pony
 # Create Mock object for tests

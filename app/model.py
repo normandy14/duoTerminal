@@ -56,7 +56,7 @@ class Model:
             
         """
         self.vocab = self.session.get_known_words('es') # TO SPEED UP DEVELOPMENT: GENERALIZE LATER! # used to retrieve list of all learned words that user has learned
-        self.vocab = self.vocab[:12] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
+        self.vocab = self.vocab[:14] # TO SPEED UP DEVELOPMENT: REMOVE LATER!
     
     def translateToHash(self) -> None:
         """
@@ -67,8 +67,19 @@ class Model:
         translations = translator.translate(self.vocab) # method of googletrans constructor
         for translation in translations:
             self.wordHash[translation.origin] = translation.text.lower() # store the foreign language word as the key with corresponding english translation
-            self.flagHash[translation.origin] = 0 # every word in this dictionary is, by default, unlearned`
+            self.flagHash[translation.origin] = 0 # every word in this dictionary is, by default, unlearned
+        # words that have no translation in the api have the same key and value; remove these entries from the model
+        self.wordHash = self.filterDuplHashmap(self.wordHash)
+        self.flagHash = self.filterDuplHashmap(self.flagHash)
     
+    def filterDuplHashmap(self, hashmap):
+        """
+            Method that filters/removes entries from a hashmap that have identical key and value. When google translate api cannot find a direct translation, it puts the target language word as the english translation. Thus, the word cannot be correctly translated by the user. Hence, its removal.
+            
+        """
+        hashmap = {key : value for (key, value) in hashmap.items() if key != value}
+        return hashmap
+        
     """
         The following methods:
         
@@ -143,7 +154,7 @@ class Model:
     """
         The following methods:
         
-            compareApiToTable(), queryHashFromTable(), closeDb()
+            compareApiToTable(), queryHashFromTable(), recreateTable(), closeDb()
         
         Interact with sqlite3 database using the database class.
         These methods abstract the methods in the database class so that the developer does not have to interact with the database class directly
@@ -158,7 +169,7 @@ class Model:
             The boolean value represents equality of length
             
         """
-        vocab = self.session.get_known_words('es')[:12] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
+        vocab = self.session.get_known_words('es')[:14] # TO SPEED UP DEVELOPMENT: GENERALIZE LATER!
         countAccount = len(vocab) # the number of entries stored in the user's account
         countRows = self.db.numOfEntries() # method the returns length (number of rows) in the table
         print (countAccount)
@@ -181,12 +192,14 @@ class Model:
         """
         self.db.hashToTable(hashmap)
     
-    def dropTable(self) -> None:
+    def recreateTable(self) -> None:
+        """
+            Method that deletes and creates a new translation table in the database
+            
+        """
         self.db.dropTable()
-    
-    def createTable(self) -> None:
         self.db.createTable()
-        
+    
     def closeDb(self) -> None:
         """
             Method that safely closes the database

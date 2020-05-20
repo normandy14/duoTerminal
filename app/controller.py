@@ -32,13 +32,12 @@ class Controller:
                 print ("getting data from api and creating table...")
                 self.dataToModel() # gets the user's data from duolingo via api, and stores the data in the model api
                 wordHash = self.model.getWordHash() # creates a wordhash hashmap from the model
-                self.model.dropTable()
-                self.model.createTable()
+                self.model.recreateTable()
                 self.model.queryHashToTable(wordHash) # inserts the entries in the hashmap into the model
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
-            self.iterateVocabHash(wordHash, flagHash)
+            self.iterateVocabHash(wordHash, flagHash) # send and receive data from both model and view
             self.model.closeDb()
         else:
             self.exit()
@@ -89,10 +88,10 @@ class Controller:
             
         """
         self.view.displayOutput("loading data...")
-        self.model.queryHashFromTable()
-        keys = list(self.model.getWordHash().keys())
+        self.model.queryHashFromTable() # converts the table rows and stores it in the class variable of the model
+        keys = list(self.model.getWordHash().keys()) # gather the keys as a paramter for the makeNewFlagHash method
         flagHash = self.model.makeNewFlagHash(keys)
-        self.model.setFlagHash(flagHash)
+        self.model.setFlagHash(flagHash) # setter method
     
     def branchOutput(self) -> List[Dict]:
         """
