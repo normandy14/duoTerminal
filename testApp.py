@@ -61,4 +61,48 @@ class TestClass:
         answer = {'hat' : 'sombrero', 'house' : 'casa', 'cat' : 'gato'}
         assert self.model.invertWordHash() == answer
     
+    def test_invertWordHash2(self):
+        self.model.wordHash = {'sombrero' : 'hat', 'casa' : 'house', 'gato' : 'cat'}
+        answer = {'hat' : 'sombrero', 'house' : 'casa', 'cat' : 'gato'}
+        assert self.model.invertWordHash() == answer
+    
+    def test_makeNewFlagHash(self):
+        list_ = ['sombrero', 'casa', 'gato']
+        answer = {'sombrero' : 0, 'casa' : 0, 'gato' : 0 }
+        self.model.makeNewFlagHash(list_) == answer
+    
+    def test_compareInput(self):
+        flagHash = {'sombrero' : 0, 'casa' : 0, 'gato' : 0 }
+        key = 'sombrero'
+        value = 'hat'
+        input_ = 'hat'
+        answer = {'sombrero' : 1, 'casa' : 0, 'gato' : 0 }
+        self.model.compareInput(key, value, input_, flagHash) == answer
+    
+    def test_compareInput2(self):
+        flagHash = {'sombrero' : 0, 'casa' : 0, 'gato' : 0 }
+        key = 'sombrero'
+        value = 'hat'
+        input_ = 'pizza'
+        answer = {'sombrero' : 0, 'casa' : 0, 'gato' : 0 }
+        self.model.compareInput(key, value, input_, flagHash) == answer
+    
+    def test_getNumCorrect(self):
+        flagHash = {'sombrero' : 0, 'casa' : 0, 'gato' : 0 }
+        answer = 0
+        self.model.getNumCorrect(flagHash) == answer
+    
+    def test_getNumCorrect2(self):
+        flagHash = {'sombrero' : 0, 'casa' : 1, 'gato' : 1 }
+        answer = 2
+        self.model.getNumCorrect(flagHash) == answer
    
+    def test_filterDuplHashmap(self):
+        wordHash = {'sombrero' : 'hat', 'casa' : 'house', 'gato' : 'cat'}
+        answer = {'sombrero' : 'hat', 'casa' : 'house', 'gato' : 'cat'}
+        self.model.filterDuplHashmap(wordHash) == answer
+    
+    def test_filterDuplHashmap2(self):
+        wordHash = {'sombrero' : 'sombrero', 'casa' : 'house', 'gato' : 'goto'}
+        answer = {'casa' : 'house'}
+        self.model.filterDuplHashmap(wordHash) == answer
