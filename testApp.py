@@ -12,90 +12,53 @@ class TestClass:
     
     """
         Test Suite 1
-    
-    """
-    
-    def test_vocabFlag(self):
-        flagHash = {"bien" : 0, "casa" : 0, "tres" : 0}
-        assert self.model.vocabFlag(flagHash) == False
-    
-    def test_vocabFlag2(self):
-        flagHash = {"bien" : 1, "casa" : 1, "tres" : 1}
-        assert self.model.vocabFlag(flagHash) == True
-    
-    def test_vocabFlag3(self):
-        flagHash = {"bien" : 1, "casa" : 0, "tres" : 1}
-        assert self.model.vocabFlag(flagHash) == False
-    
-    """
-        Test Suite 2
-    
-    """
         
-    def test_compareInput(self):
-        flagHash = {"bien" : 0, "casa" : 0, "tres" : 0}
-        self.model.compareInput("bien", "bien", "bien", flagHash)
-        assert flagHash == {"bien" : 1, "casa" : 0, "tres" : 0}
-    
-    def test_compareInput2(self):
-        flagHash = {"bien" : 0, "casa" : 0, "tres" : 0}
-        self.model.compareInput("good", "bien", "bien", flagHash)
-        assert flagHash == {'bien': 0, 'casa': 0, 'tres': 0, 'good': 1}
-    
-    def test_compareInput3(self):
-        flagHash = {"bien" : 0, "casa" : 0, "tres" : 0}
-        self.model.compareInput("bien", "good", "bien", flagHash)
-        assert flagHash == {"bien" : 0, "casa" : 0, "tres" : 0}
+        def test_vocabFlag(self):
+            flagHash = {"bien" : 0, "casa" : 0, "tres" : 0}
+            assert self.model.vocabFlag(flagHash) == False
     
     """
-        Test Suite 3
     
-    """
+    def test_storeUserCredentials1(self):
+        self.model.storeUserCredentials("joedane16", "doeisthedear")
+        answer = "joedane16"
+        assert self.model.username == answer
+    
+    def test_storeUserCredentials2(self):
+        self.model.storeUserCredentials("joedane16", "doeisthedear")
+        answer = "doeisthedear"
+        assert self.model.password == answer
     
     def test_updateVocabHash(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 0, "casa" : 0, "tres" : 0}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {"bien" : "good", "casa" : "house", "tres" : "three"}
+        vocabHash = {'sombrero' : 'hat', 'casa' : 'house', 'gato' : 'cat'}
+        flagHash = {'sombrero' : 0, 'casa' : 0, 'gato' : 0}
+        answer = {'sombrero' : 'hat', 'casa' : 'house', 'gato' : 'cat'}
+        assert self.model.updateVocabHash(vocabHash, flagHash) == answer
     
     def test_updateVocabHash2(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 1, "casa" : 0, "tres" : 0}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {"casa" : "house", "tres" : "three"}
+        vocabHash = {'sombrero' : 'hat', 'casa' : 'house', 'gato' : 'cat'}
+        flagHash = {'sombrero' : 1, 'casa' : 1, 'gato' : 0}
+        answer = {'gato' : 'cat'}
+        assert self.model.updateVocabHash(vocabHash, flagHash) == answer
     
-    def test_updateVocabHash3(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 0, "casa" : 1, "tres" : 0}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {"bien" : "good", "tres" : "three"}
+    def test_vocabFlag(self):
+        flagHash = {'sombrero' : 0, 'casa' : 0, 'gato' : 0}
+        answer = False
+        assert self.model.vocabFlag(flagHash) == answer
     
-    def test_updateVocabHash4(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 0, "casa" : 0, "tres" : 1}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {"bien" : "good", "casa" : "house"}
+    def test_vocabFlag2(self):
+        flagHash = {'sombrero' : 1, 'casa' : 0, 'gato' : 0}
+        answer = False
+        assert self.model.vocabFlag(flagHash) == answer
     
-    def test_updateVocabHash5(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 1, "casa" : 1, "tres" : 0}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {"tres" : "three"}
+    def test_vocabFlag3(self):
+        flagHash = {'sombrero' : 1, 'casa' : 1, 'gato' : 1}
+        answer = True
+        assert self.model.vocabFlag(flagHash) == answer
+   
+    def test_invertWordHash(self):
+        self.model.wordHash = {'sombrero' : 'hat', 'casa' : 'house', 'gato' : 'cat'}
+        answer = {'hat' : 'sombrero', 'house' : 'casa', 'cat' : 'gato'}
+        assert self.model.invertWordHash() == answer
     
-    def test_updateVocabHash6(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 1, "casa" : 0, "tres" : 1}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {"casa" : "house"}
-        
-    def test_updateVocabHash7(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 0, "casa" : 1, "tres" : 1}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {"bien" : "good"}
-    
-    def test_updateVocabHash8(self):
-        hash_ = {"bien" : "good", "casa" : "house", "tres" : "three"}
-        flagHash = {"bien" : 1, "casa" : 1, "tres" : 1}
-        filteredHash = self.model.updateVocabHash(hash_, flagHash)
-        assert filteredHash == {}
+   

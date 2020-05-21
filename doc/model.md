@@ -26,6 +26,9 @@ CLASSES
      |  compareInput(self, key: str, value: str, input_: str, flagHash: Dict[str, int]) -> Dict[str, int]
      |      Method that compares user input with value (translation) in flagHash
      |  
+     |  filterDuplHashmap(self, hashmap)
+     |      Method that filters/removes entries from a hashmap that have identical key and value. When google translate api cannot find a direct translation, it puts the target language word as the english translation. Thus, the word cannot be correctly translated by the user. Hence, its removal.
+     |  
      |  getNumCorrect(self, flagHash: Dict[str, int]) -> int
      |      Method that computes and returns the number of unlearned words remaining
      |      
@@ -45,6 +48,14 @@ CLASSES
      |  
      |  queryHashFromTable(self) -> None
      |      Method that converts the rows in the table in the database into a hashmap and assigns the value into a model class variable
+     |  
+     |  queryHashToTable(self, hashmap) -> None
+     |      Method that converts the entries in the hashmap into rows for the table in the database
+     |  
+     |  recreateTable(self) -> None
+     |      Method that deletes and creates a new translation table in the database
+     |  
+     |  saveDataToPersistentStorage(self) -> None
      |  
      |  setFlagHash(self, hashmap)
      |      Method that assigns the parameter hashmap to the flaghash variable

@@ -8,7 +8,7 @@ CLASSES
         Database
     
     class Database(builtins.object)
-     |  Class that contains the methods that interact with the 'backend' and data of the program
+     |  Class that contains the methods that interact with the sqlite3 database of the program
      |  
      |  Methods defined here:
      |  
@@ -20,6 +20,9 @@ CLASSES
      |  
      |  createTable(self) -> None
      |      Method that creates a table in the database
+     |  
+     |  dropTable(self) -> None
+     |      Method that deletes the translation table in the database
      |  
      |  hashToTable(self, hashmap: Dict[str, str]) -> None
      |      Method that converts a hashmap into rows in the table

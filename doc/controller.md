@@ -15,13 +15,15 @@ CLASSES
      |  __init__(self)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |  
+     |  branchGetData(self, lenComp: bool) -> None
+     |  
      |  branchOutput(self) -> List[Dict]
      |      Method that obtains user input. The input determines the batch of methods that are run
      |  
-     |  dataToModel(self) -> None
+     |  dataFromTable(self) -> None
      |      Method that orchestrates obtaining from duolingo vocabulary words and converts the words from a list to a hashmap
      |  
-     |  dataToTable(self) -> None
+     |  dataToModel(self) -> None
      |      Method that orchestrates obtaining from duolingo vocabulary words and converts the words from a list to a hashmap
      |  
      |  displayNumCorrect(self, flagHash: Dict[str, int]) -> None

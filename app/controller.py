@@ -22,14 +22,18 @@ class Controller:
         """
         run = self.view.display() # if the user selects to procede, then with the main program
         if run == True:
+            
             self.storeCredentials() # gets the credentials from the user and store in class methods
             self.storeSession() # gets the credentials to sign into duolingo via api, and then gets the user session and stores it in class method
+            
             numEntriesComp = self.model.compareApiToTable() # boolean value for equality
             self.branchGetData(numEntriesComp) # load data into model
+            
             hashes = self.branchOutput() # gets the user's input to determine the batch of methods used in program
             wordHash = hashes[0] # unpack the two dictionaries
             flagHash = hashes[1]
             self.iterateVocabHash(wordHash, flagHash) # send and receive data from both model and view
+            
             self.model.closeDb()
         else:
             self.exit()
