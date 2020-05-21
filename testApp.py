@@ -11,11 +11,8 @@ class TestClass:
         self.model = Model()
     
     """
-        Test Suite 1
-        
-        def test_vocabFlag(self):
-            flagHash = {"bien" : 0, "casa" : 0, "tres" : 0}
-            assert self.model.vocabFlag(flagHash) == False
+        The following tests suite provides tests coverage for model class only. It ignores any and all methods that interact with
+        networking, database, and view
     
     """
     
