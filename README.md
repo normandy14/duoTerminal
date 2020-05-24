@@ -120,6 +120,12 @@ Add additional notes about how to deploy this on a live system
 2. [Hyper](https://github.com/python-hyper/hyper/) -- HTTP/2 Client for Python
 3. [Google Trans](https://github.com/ssut/py-googletrans/) -- Unofficial Google Translate API Wrapper
 
+## Programming Ideology
+
+This project uses the Model-View-Controller (MVC) paradigm to organize and structure code. The Model-View-Controller paradigm seperates the concerns between the data (model) and display (view). The controller is the code base that connects the interactions between the data (model) and the display (view). The seperation of the code makes the code easier to reason, the code easier to debug, and the code easier to modify.
+
+The Model-View-Controller in this code base uses Python's class and objects. The controller creates instances of the model and view, and calls the methods of these classes to control the flow of the app.
+
 ## Recommendation for Future Versions of App
 
 Google Trans library is an unoffical api, and we highly recommend for it to be replaced with the official Google Translate service in Google Cloud Platform. However, the offical Google Translate service has a financial cost. It is highly recommended because the unoffical api has poor speed performance. The offical service will signifantly reduce network runtime.
