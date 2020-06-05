@@ -117,6 +117,10 @@ class Controller:
     """
     
     def branchGetData(self, lenComp: bool) -> None:
+        """
+            Method that determines the flow of the program. It obtains the existing entries in the table if it already exist. Otherwise, it deletes and recreates an empty table and obtains entries from the duolingo api, then saves the entries in the table for later"
+            
+        """
         if lenComp == True: # same lengrh
             self.view.displayOutput("getting data from table...")
             self.dataFromTable() # get data from table and store in model
