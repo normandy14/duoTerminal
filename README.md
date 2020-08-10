@@ -23,7 +23,7 @@ DuoTerminal allows for reinforcement of learned words in isolation. It also requ
 
 1. app - contains the *.py files. Central part of app.
 2. doc - contains the *.md files. Additional documentation for app.
-3. sql - contains the *.db files. A rewritable (peripheral) database for app.
+3. sql - contains the *.db files. Rewritable, peripheral) database for app.
 
 ## Getting Started
 
