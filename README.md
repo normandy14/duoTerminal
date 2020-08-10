@@ -36,6 +36,7 @@ What things you need to install the software and how to install them
 1. [Python 3](https://www.python.org/) -- Popular Programming Language
 2. [Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3) -- Programming Packaging Installer
 3. [Pipenv](https://pypi.org/project/pipenv/) -- Programming Enviroment Manager
+4. [Git](https://git-scm.com/) -- Open Source Distributed Version Control System
 
 Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
 
@@ -43,7 +44,12 @@ Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
 
 A step by step series of examples that tell you how to get a development env running
 
-1. Install Prerequisites
+1. Clone project
+
+```
+git clone [(HTTPS/SSH) URL]
+```
+
 2. Enter the Pipenv enviroment
 
 ```
@@ -90,7 +96,6 @@ pipenv install --dev
 ```
 pipenv run nosetests testApp.py
 ```
-
 
 ### Break down into end to end tests
 
