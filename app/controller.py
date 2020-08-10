@@ -163,7 +163,7 @@ class Controller:
             
         """
         userSolvedAll = self.model.vocabFlag(flagHash) # boolean variable: default value is False
-        while flag != True:
+        while userSolvedAll != True:
             for key in wordHash:
                 self.vocabIO(key, wordHash, flagHash) # give and get data from the view and model, respectively
             wordHash = self.model.updateVocabHash(wordHash, flagHash) # filter the vocabHash with the translated words
