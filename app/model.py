@@ -192,6 +192,10 @@ class Model:
         self.db.hashToTable(hashmap)
         
     def saveDataToPersistentStorage(self) -> None:
+        """
+            Method that creates a new hashmap and saves it in the database
+            
+        """
         wordHash = self.model.getWordHash() # creates a wordhash hashmap from the model
         self.model.recreateTable() # delete and create (clear) the translation table
         self.model.queryHashToTable(wordHash) # inserts the entries in the hashmap into the database, so that at next run data will remain persistent
