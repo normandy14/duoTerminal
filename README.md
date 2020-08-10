@@ -19,6 +19,12 @@ Duoterminal is a project created for the user that wants to supplement their lan
 
 DuoTerminal allows for reinforcement of learned words in isolation. It also requires the user to type in by hand the translation of the individual words, unlike the Duolingo app which encourages the user to click the correct translation of a sentence.
 
+## Directory
+
+1. app - contains the *.py files. Central part of app.
+2. doc - contains the *.md files. Additional documentation for app.
+3. sql - contains the *.db files. A rewritable (peripheral) database for app.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
