@@ -21,9 +21,9 @@ DuoTerminal allows for reinforcement of learned words in isolation. It also requ
 
 ## Directory
 
-1. app - contains the *.py files. Central part of app.
-2. doc - contains the *.md files. Additional documentation for app.
-3. sql - contains the *.db files. Rewritable, peripheral) database for app.
+1. :house: app - contains the *.py files. Central part of app.
+2. :file_folder: doc - contains the *.md files. Additional documentation for app.
+3. :mailbox_with_mail: sql - contains the *.db files. Rewritable, peripheral) database for app.
 
 ## Getting Started
 
@@ -33,10 +33,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-1. [Python 3](https://www.python.org/) -- Popular Programming Language
-2. [Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3) -- Programming Packaging Installer
-3. [Pipenv](https://pypi.org/project/pipenv/) -- Programming Enviroment Manager
-4. [Git](https://git-scm.com/) -- Open Source Distributed Version Control System
+1. :snake: [Python 3](https://www.python.org/) -- Popular Programming Language
+2. :snake: [Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3) -- Programming Packaging Installer
+3. :snake: [Pipenv](https://pypi.org/project/pipenv/) -- Programming Enviroment Manager
+4. :card_index: [Git](https://git-scm.com/) -- Open Source Distributed Version Control System
 
 Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
 
@@ -44,25 +44,25 @@ Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
 
 A step by step series of examples that tell you how to get a development env running
 
-1. Clone project
+1. :card_index: Clone project
 
 ```
 git clone [(HTTPS/SSH) URL]
 ```
 
-2. Enter the Pipenv enviroment
+2. :snake: Enter the Pipenv enviroment
 
 ```
 pipenv shell
 ```
 
-3. Install the program dependencies
+3. :snake: Install the program dependencies
 
 ```
 pipenv install
 ```
 
-4. Run the program
+4. :snake: Run the program
 
 ```
 pipenv run python3 app.py
@@ -79,19 +79,19 @@ select: (l)ogin or (q)uit
 
 Explain how to run the automated tests for this system
 
-1. Enter the shell enviroment
+1. :snake: Enter the shell enviroment
 
 ```
 pipenv shell
 ```
 
-2. Install the dependencies
+2. :snake: Install the dependencies
 
 ```
 pipenv install --dev
 ```
 
-3. Run the tests
+3. :snake: Run the tests
 
 ```
 pipenv run nosetests testApp.py
@@ -123,15 +123,15 @@ OK
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+:rocket: Add additional notes about how to deploy this on a live system
 
 -->
 
 ## Python Libraries
 
-1. [Duolingo](https://github.com/KartikTalwar/Duolingo/) -- Unofficial Duolingo API Wrapper
-2. [Hyper](https://github.com/python-hyper/hyper/) -- HTTP/2 Client for Python
-3. [Google Trans](https://github.com/ssut/py-googletrans/) -- Unofficial Google Translate API Wrapper
+1. :bird: [Duolingo](https://github.com/KartikTalwar/Duolingo/) -- Unofficial Duolingo API Wrapper
+2. :hourglass: [Hyper](https://github.com/python-hyper/hyper/) -- HTTP/2 Client for Python
+3. :rainbow: [Google Trans](https://github.com/ssut/py-googletrans/) -- Unofficial Google Translate API Wrapper
 
 ## Programming Ideology
 
@@ -147,19 +147,19 @@ It is also recommended that a graphical api be added such as VueJs or ReactJs.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+:newspaper: Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03) for versioning.
+:card_index: We use [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03) for versioning.
 
 ## Authors
 
-* **Normandy14** - *Initial work* - [Github Account](https://github.com/Normandy14)
+* :ocean: **Normandy14** - *Initial work* - [Github Account](https://github.com/Normandy14)
 
 ## License
 
-This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
+:newspaper: This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
 
 <!--
 
