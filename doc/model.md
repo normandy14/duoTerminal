@@ -56,6 +56,7 @@ CLASSES
      |      Method that deletes and creates a new translation table in the database
      |  
      |  saveDataToPersistentStorage(self) -> None
+     |      Method that creates a new hashmap and saves it in the database
      |  
      |  setFlagHash(self, hashmap)
      |      Method that assigns the parameter hashmap to the flaghash variable
