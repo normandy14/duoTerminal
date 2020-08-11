@@ -4,12 +4,12 @@
 
 DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform, all from the convenience of your personal terminal
 
-Effortlessly connect to your Duolingo account without opening a web browser, and enjoy the learning vocabulary reinforcement process!
+:brain: Effortlessly Enjoy the learning vocabulary reinforcement process, without even opening a web browser
 
-As you are presented with each word, translate each word from your target language to English.
+:pencil2: Translate each word from your target language to English.
 Or try your hand at translating from English to your target language. The choice is yours!
 
-The words that you missed or repeating until you've completed the translation cycle.
+:recycle: Continue to translate missed words until you complete the translation cycle.
 
 ## Motivation
 
@@ -105,10 +105,11 @@ The tests contained in testApp are unit tests for the Model class.
 Methods that involved networking are ommitted (dependency on networking).
 Tests on the Controller and View class are ommitted (dependency on user).
 
-
 The tests test the three following methods:
 
-  vocabFlag(), compareInput(), updateVocabHash()
+1. :triangular_flag_on_post: vocabFlag()
+2. :triangular_flag_on_post: compareInput()
+3. :triangular_flag_on_post: updateVocabHash()
 
 The methods tests the data processing and manipulation of the data stored in hashes
 
@@ -135,9 +136,11 @@ OK
 
 ## Programming Ideology
 
-This project uses the Model-View-Controller (MVC) paradigm to organize and structure code. The Model-View-Controller paradigm seperates the concerns between the data (model) and display (view). The controller is the code base that connects the interactions between the data (model) and the display (view). The seperation of the code makes the code easier to reason, the code easier to debug, and the code easier to modify.
+This project uses the Model-View-Controller (MVC) paradigm to organize and structure code. The Model-View-Controller paradigm seperates the concerns between the data (model) and display (view). 
 
-The Model-View-Controller in this code base uses Python's class and objects. The controller creates instances of the model and view, and calls the methods of these classes to control the flow of the app.
+1. :robot: Controller - coordinates the interaction between the model and view
+2. :microscope: Model - contains the logic of the backend: api and database
+3. :art: View - displays the data received by controller to user
 
 ## Recommendation for Future Versions of App
 
