@@ -4,12 +4,11 @@
 
 DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform, all from the convenience of your personal terminal
 
-:brain: Effortlessly Enjoy the learning vocabulary reinforcement process, without even opening a web browser
+1. :brain: Effortlessly Enjoy the learning vocabulary reinforcement process, without even opening a web browser
 
-:pencil2: Translate each word from your target language to English.
-Or try your hand at translating from English to your target language. The choice is yours!
+2. :pencil2: Translate each word from your target language to English, or try your hand at translating from English to your target language. The choice is yours!
 
-:recycle: Continue to translate missed words until you complete the translation cycle.
+3. :recycle: Continue to translate missed words until you complete the translation cycle.
 
 ## Motivation
 
