@@ -2,9 +2,9 @@
 
 ![Duo](https://vignette.wikia.nocookie.net/duolingo/images/b/be/Duo_2019.png/revision/latest?cb=20190307143704)
 
-DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform, all from the convenience of your personal terminal
+DuoTerminal, reinforce learned words that you've learned on the Duolingo web/android/ios platform, all from the convenience of your personal terminal.
 
-1. :brain: Effortlessly Enjoy the learning vocabulary reinforcement process, without even opening a web browser
+1. :brain: Effortlessly Enjoy the learning vocabulary reinforcement process, without even opening a web browser.
 
 2. :pencil2: Translate each word from your target language to English, or try your hand at translating from English to your target language. The choice is yours!
 
@@ -30,18 +30,18 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+What things you need to install the software and how to install them.
 
 1. :snake: [Python 3](https://www.python.org/) -- Popular Programming Language
 2. :snake: [Pip3](https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3) -- Programming Packaging Installer
 3. :snake: [Pipenv](https://pypi.org/project/pipenv/) -- Programming Enviroment Manager
 4. :card_index: [Git](https://git-scm.com/) -- Open Source Distributed Version Control System
 
-Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv
+Pip3 should be installed before Pipenv because Pip3 is needed to install Pipenv.
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+A step by step series of examples that tell you how to get a development env running.
 
 1. :card_index: Clone project
 
@@ -67,7 +67,7 @@ pipenv install
 pipenv run python3 app.py
 ```
 
-You will be presented with a menu such as the following, when you run the program successfully
+You will be presented with a menu such as the following, when you run the program successfully:
 
 ```
 welcome to duo terminal: review duolingo words on your terminal
@@ -76,7 +76,7 @@ select: (l)ogin or (q)uit
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Explain how to run the automated tests for this system:
 
 1. :snake: Enter the shell enviroment
 
@@ -98,7 +98,7 @@ pipenv run nosetests testApp.py
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+Explain what these tests test and why.
 
 The tests contained in testApp are unit tests for the Model class.
 Methods that involved networking are ommitted (dependency on networking).
@@ -110,7 +110,7 @@ The tests test the three following methods:
 2. :triangular_flag_on_post: compareInput()
 3. :triangular_flag_on_post: updateVocabHash()
 
-The methods tests the data processing and manipulation of the data stored in hashes
+The methods tests the data processing and manipulation of the data stored in hashes:
 
 ```
 pipenv run nosetests testApp.py
@@ -123,7 +123,7 @@ OK
 
 ## Deployment
 
-:rocket: Add additional notes about how to deploy this on a live system
+:rocket: Add additional notes about how to deploy this on a live system.
 
 -->
 
@@ -137,9 +137,9 @@ OK
 
 This project uses the Model-View-Controller (MVC) paradigm to organize and structure code. The Model-View-Controller paradigm seperates the concerns between the data (model) and display (view). 
 
-1. :robot: Controller - coordinates the interaction between the model and view
-2. :microscope: Model - contains the logic of the backend: api and database
-3. :art: View - displays the data received by controller to user
+1. :robot: Controller - coordinates the interaction between the model and view.
+2. :microscope: Model - contains the logic of the backend: api and database.
+3. :art: View - displays the data received by controller to user.
 
 ## Recommendation for Future Versions of App
 
@@ -161,7 +161,7 @@ It is also recommended that a graphical api be added such as VueJs or ReactJs.
 
 ## License
 
-:newspaper: This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
+:newspaper: This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details.
 
 <!--
 
